@@ -5,40 +5,46 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --bg-main: #f8fafc;
-  --bg-sidebar: #ffffff;
+  --bg-main: #ffffff;
+  --bg-sidebar: rgba(255, 255, 255, 0.7);
   --card-bg: #ffffff;
-  --card-border: #e2e8f0;
+  --card-border: rgba(226, 232, 240, 0.6);
   
   --text-main: #0f172a;
   --text-muted: #64748b;
   --text-light: #94a3b8;
   
-  --primary: #4338ca;
-  --primary-hover: #3730a3;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
+  --primary: #6366f1; /* Indigo 500 */
+  --primary-hover: #4f46e5;
+  --accent: #8b5cf6; /* Purple 500 */
+  --accent-hover: #7c3aed;
   
-  --success: #10b981;
-  --success-bg: #d1fae5;
-  --danger: #ef4444;
-  --danger-bg: #fee2e2;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-blur: blur(12px);
 
+  --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+  color-scheme: light;
+}
   color-scheme: light;
 }
 
 .dark {
-  --bg-main: #020617; /* Slate 950 */
-  --bg-sidebar: #0f172a; /* Slate 900 */
+  --bg-main: #020617;
+  --bg-sidebar: rgba(15, 23, 42, 0.7);
   --card-bg: #0f172a;
-  --card-border: #1e293b; /* Slate 800 */
+  --card-border: rgba(30, 41, 59, 0.6);
   
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-light: #cbd5e1;
   
-  --success-bg: rgba(16, 185, 129, 0.2);
-  --danger-bg: rgba(239, 68, 68, 0.2);
+  --glass: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-blur: blur(12px);
+
+  --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -6px rgba(0, 0, 0, 0.1);
 
   color-scheme: dark;
 }
@@ -430,6 +436,35 @@ label {
 .fill-white { fill: var(--bg-sidebar); }
 
 /* --- Print & Resume Export Formatting --- */
+/* Glassmorphism & Scroll Effects */
+.glass-effect {
+  background: var(--glass) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+}
+
+.header-scrolled {
+  padding: 0.6rem 2rem !important;
+  background: var(--glass) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  box-shadow: var(--shadow-premium) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-premium);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
 @media print {
   @page { margin: 1cm; }
   
