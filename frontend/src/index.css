@@ -260,7 +260,7 @@ label {
 .gap-8 { gap: 2rem; }
 
 .grid { display: grid; }
-.grid-cols-2 { grid-template-columns: repeat(even, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 768px) {
   .grid-cols-2 { grid-template-columns: 1fr 1fr; }
   .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
