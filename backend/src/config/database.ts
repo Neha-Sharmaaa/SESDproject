@@ -68,11 +68,11 @@ export async function initDatabase() {
   `);
 
   // Seed initial data if needed
-  const userCount = await d.get('SELECT COUNT(*) as count FROM users');
-  if (userCount.count === 0) {
+  const skillsCount = await d.get('SELECT COUNT(*) as count FROM skills');
+  if (skillsCount.count === 0) {
     // Basic skills
     await d.exec(`
-      INSERT INTO skills (name, category) VALUES 
+      INSERT OR IGNORE INTO skills (name, category) VALUES 
       ('JavaScript', 'Frontend'),
       ('React', 'Frontend'),
       ('Node.js', 'Backend'),
@@ -81,18 +81,18 @@ export async function initDatabase() {
       ('Machine Learning', 'Data Science'),
       ('SQL', 'Database');
 
-      INSERT INTO career_roles (name, description) VALUES 
+      INSERT OR IGNORE INTO career_roles (name, description) VALUES 
       ('Full Stack Developer', 'Expert in both frontend and backend technologies.'),
       ('Frontend Developer', 'Focuses on user interface and user experience.'),
       ('Backend Developer', 'Focuses on server-side logic and database.'),
       ('Data Scientist', 'Analyzes and interprets complex data.');
 
       -- Full Stack Developer needs
-      INSERT INTO career_required_skills (career_id, skill_id, required_level) VALUES 
+      INSERT OR IGNORE INTO career_required_skills (career_id, skill_id, required_level) VALUES 
       (1, 1, 8), (1, 2, 8), (1, 3, 8), (1, 7, 7);
 
       -- Data Scientist needs
-      INSERT INTO career_required_skills (career_id, skill_id, required_level) VALUES 
+      INSERT OR IGNORE INTO career_required_skills (career_id, skill_id, required_level) VALUES 
       (4, 5, 9), (4, 6, 8), (4, 7, 7);
     `);
   }
