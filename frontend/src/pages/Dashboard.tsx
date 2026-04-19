@@ -90,8 +90,9 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <div className="grid grid-cols-2 gap-6">
         {skills.map((skill, index) => (
-          <div key={skill.id} className="card m-0 bg-white animate-slide-in group" style={{ padding: '2rem', animationDelay: `${0.2 + (index * 0.1)}s` }}>
+          <div key={skill.id} className="card m-0 bg-white animate-slide-in group hover:border-indigo-200" style={{ padding: '2rem', animationDelay: `${0.1 + (index * 0.1)}s` }}>
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h3 className="text-xl font-bold mb-2 text-main group-hover:text-primary transition">{skill.name}</h3>
