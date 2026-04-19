@@ -24,56 +24,58 @@ export default function Login() {
   };
 
   return (
-    <div className="container flex justify-center items-center h-[80vh]">
-      <div className="card w-full max-cols-2 p-8 shadow-lg" style={{ maxWidth: '400px' }}>
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          {isLogin ? 'Login to SkillGraph' : 'Join SkillGraph'}
+    <div className="auth-container">
+      <div className="card w-full" style={{ maxWidth: '420px', padding: '2.5rem' }}>
+        <h2 className="text-3xl font-bold mb-8 text-center" style={{ letterSpacing: '0.5px' }}>
+          {isLogin ? 'Welcome Back' : 'Create Account'}
         </h2>
         
-        {error && <div className="mb-4 text-red-500 text-sm bg-red-100 p-2 rounded">{error}</div>}
+        {error && <div className="mb-6 text-red-500 text-sm bg-red-100 px-4 py-3 rounded-lg border border-red-500 font-medium">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">Full Name</label>
+              <label>Full Name</label>
               <input 
                 type="text" 
-                className="w-full p-2 border rounded bg-transparent border-gray-600" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                placeholder="John Doe"
                 required
               />
             </div>
           )}
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label>Email Address</label>
             <input 
               type="email" 
-              className="w-full p-2 border rounded bg-transparent border-gray-600" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@email.com"
               required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-1">Password</label>
+          <div className="mb-8">
+            <label>Password</label>
             <input 
               type="password" 
-              className="w-full p-2 border rounded bg-transparent border-gray-600" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
               required
             />
           </div>
-          <button type="submit" className="w-full bg-indigo-600 border-none text-white py-2 rounded hover:bg-indigo-700">
-            {isLogin ? 'Login' : 'Register'}
+          <button type="submit" className="w-full btn-primary text-lg" style={{ padding: '0.875rem' }}>
+            {isLogin ? 'Sign In' : 'Join SkillGraph'}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray">
+        <p className="mt-8 text-center text-sm text-gray">
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button 
-            className="ml-2 text-indigo-500 font-bold p-0 border-none bg-transparent"
+            type="button"
+            className="ml-2 font-bold p-0 border-none bg-transparent"
+            style={{ color: 'var(--accent)' }}
             onClick={() => setIsLogin(!isLogin)}
           >
             {isLogin ? 'Sign Up' : 'Log In'}

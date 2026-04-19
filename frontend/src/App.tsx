@@ -26,20 +26,26 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen flex flex-col">
         {isAuthenticated && (
-          <nav className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
-            <Link to="/" className="text-xl font-bold text-indigo-600 flex items-center gap-2">
+          <nav className="px-8 py-4 flex justify-between items-center" style={{ position: 'sticky', top: 0, zIndex: 50 }}>
+            <Link to="/" className="text-xl font-bold flex items-center gap-2" style={{ color: 'var(--primary)' }}>
               <Award size={24} /> SkillGraph
             </Link>
             <div className="flex gap-6 items-center">
-              <Link to="/" className="text-gray-600 hover:text-indigo-600 flex items-center gap-1">
+              <Link to="/" className="text-gray hover:text-white flex items-center gap-1">
                 <Layout size={18} /> Dashboard
               </Link>
-              <Link to="/recommendations" className="text-gray-600 hover:text-indigo-600 flex items-center gap-1">
+              <Link to="/recommendations" className="text-gray hover:text-white flex items-center gap-1">
                 <Award size={18} /> Career
               </Link>
-              <button onClick={logout} className="text-red-500 hover:text-red-700 flex items-center gap-1">
+              <button 
+                onClick={logout} 
+                className="flex items-center gap-1"
+                style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#fca5a5', borderColor: 'transparent' }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
+              >
                 <LogOut size={18} /> Logout
               </button>
             </div>
