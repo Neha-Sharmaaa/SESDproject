@@ -143,7 +143,7 @@ button:active {
   color: white;
 }
 
-input, select {
+input:not([type="range"]), select {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -156,7 +156,15 @@ input, select {
   margin-top: 0.25rem;
 }
 
-input:focus, select:focus {
+input[type="range"] {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+input:not([type="range"]):focus, select:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);

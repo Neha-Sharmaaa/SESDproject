@@ -142,14 +142,30 @@ export default function Dashboard() {
               </div>
               <div className="mb-8">
                 <label>Proficiency Level (1-10)</label>
-                <input 
-                  type="range" min="1" max="10" step="1"
-                  className="w-full"
-                  style={{ accentColor: 'var(--primary)' }}
-                  value={newSkillLevel}
-                  onChange={(e) => setNewSkillLevel(parseInt(e.target.value))}
-                />
-                <div className="text-center font-bold text-2xl mt-4" style={{ color: 'var(--primary)' }}>{newSkillLevel}</div>
+                <div className="flex items-center gap-4 mt-4 mb-2">
+                  <button 
+                    type="button"
+                    onClick={() => setNewSkillLevel(Math.max(1, newSkillLevel - 1))}
+                    style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%', fontSize: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-main)', border: '1px solid var(--card-border)', color: 'var(--text-main)', cursor: 'pointer', flexShrink: 0 }}
+                  >
+                    -
+                  </button>
+                  <input 
+                    type="range" min="1" max="10" step="1"
+                    className="flex-1"
+                    style={{ accentColor: 'var(--primary)', margin: 0, height: '6px' }}
+                    value={newSkillLevel}
+                    onChange={(e) => setNewSkillLevel(parseInt(e.target.value))}
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setNewSkillLevel(Math.min(10, newSkillLevel + 1))}
+                    style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%', fontSize: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-main)', border: '1px solid var(--card-border)', color: 'var(--text-main)', cursor: 'pointer', flexShrink: 0 }}
+                  >
+                    +
+                  </button>
+                </div>
+                <div className="text-center font-bold text-3xl mt-6" style={{ color: 'var(--primary)' }}>{newSkillLevel}</div>
               </div>
               <div className="flex gap-4">
                 <button 
