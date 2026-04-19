@@ -1,86 +1,81 @@
-``mermaid
+```mermaid
 classDiagram
+    %% Repositories (Inheritance)
+    class BaseRepository~T~ {
+        <<abstract>>
+        #tableName: string
+        #db(): Database
+        +findAll(): T[]
+        +findById(id: number): T
+        +delete(id: number): void
+    }
 
-class User {
-    +int id
-    +string name
-    +string email
-    -string password
-    +string role
-    +register()
-    +login()
-}
+    class UserRepository {
+        +findByEmail(email: string): User
+        +create(user: User): number
+    }
 
-class Skill {
-    +int id
-    +string name
-    +string category
-}
+    class SkillRepository {
+        +findUserSkills(userId: number): Skill[]
+        +addUserSkill(userId: number, skillId: number, level: number): void
+    }
 
-class UserSkill {
-    +int id
-    +int level
-}
+    class CareerRepository {
+        +getRequiredSkills(careerId: number): CareerRequiredSkill[]
+        +getRoadmap(careerId: number): any
+    }
 
-class CareerRole {
-    +int id
-    +string name
-    +string description
-}
+    UserRepository --|> BaseRepository
+    SkillRepository --|> BaseRepository
+    CareerRepository --|> BaseRepository
 
-class CareerRequiredSkill {
-    +int id
-    +int requiredLevel
-}
+    %% Services (Singleton & Polymorphism)
+    class RecommendationStrategy {
+        <<interface>>
+        +calculate(userSkills: any[], careerSkills: any[]): number
+    }
 
-class Roadmap {
-    +int id
-    +string steps
-}
+    class SimpleMatchStrategy {
+        +calculate(userSkills: any[], careerSkills: any[]): number
+    }
 
-class AuthController {
-    +login()
-    +register()
-}
+    SimpleMatchStrategy ..|> RecommendationStrategy
 
-class CareerController {
-    +getRecommendations()
-    +generateRoadmap()
-}
+    class AuthService {
+        <<singleton>>
+        -userRepository: UserRepository
+        +getInstance(): AuthService
+        +register(userData: User): any
+        +login(email: string, pass: string): any
+    }
 
-class CareerService {
-    +processRecommendation(userId)
-    +calculateMatch()
-    +identifySkillGap()
-}
+    class CareerService {
+        <<singleton>>
+        -careerRepo: CareerRepository
+        -skillRepo: SkillRepository
+        -strategy: RecommendationStrategy
+        +getInstance(): CareerService
+        +getRecommendations(userId: number): any
+        +getRoadmap(careerId: number, userId: number): any
+    }
 
-class UserService {
-    +addSkill()
-    +updateSkill()
-}
+    %% Controllers (MVC)
+    class AuthController {
+        -authService: AuthService
+        +register(req: Request, res: Response): void
+        +login(req: Request, res: Response): void
+    }
 
-class UserRepository {
-    +findById()
-    +save()
-}
+    class CareerController {
+        -careerService: CareerService
+        +getRecommendations(req: Request, res: Response): void
+        +getRoadmap(req: Request, res: Response): void
+    }
 
-class SkillRepository {
-    +findByUserId()
-}
-
-class CareerRepository {
-    +findAllCareers()
-}
-
-User "1" --> "many" UserSkill
-Skill "1" --> "many" UserSkill
-CareerRole "1" --> "many" CareerRequiredSkill
-Skill "1" --> "many" CareerRequiredSkill
-CareerRole "1" --> "1" Roadmap
-AuthController --> UserService
-CareerController --> CareerService
-CareerService --> SkillRepository
-CareerService --> CareerRepository
-UserService --> UserRepository
-UserService --> SkillRepository
+    AuthController --> AuthService
+    CareerController --> CareerService
+    CareerService --> RecommendationStrategy
+    CareerService --> CareerRepository
+    CareerService --> SkillRepository
+    AuthService --> UserRepository
 ```
