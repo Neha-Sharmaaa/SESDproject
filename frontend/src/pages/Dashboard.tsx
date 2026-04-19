@@ -72,7 +72,7 @@ export default function Dashboard() {
 
   return (
     <div className="container" style={{ maxWidth: '1440px' }}>
-      <header className="flex justify-between items-end mb-12 animate-slide-in no-print">
+      <header className="flex justify-between items-end mb-12 no-print">
         <div>
           <h1 className="text-4xl font-bold mb-3" style={{ color: 'var(--text-main)' }}>Skill Dashboard</h1>
           <p className="text-gray text-lg">Track your technical competencies dynamically</p>

@@ -19,7 +19,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="px-8 py-20 flex flex-col items-center justify-center text-center" style={{ minHeight: '80vh' }}>
-        <div className="animate-slide-in">
+        <div>
           <h1 className="text-6xl font-bold mb-6 max-w-4xl tracking-tight leading-tight">
             Master Your Career Journey with <span className="text-gradient inline-block">SkillGraph</span>
           </h1>
@@ -37,17 +37,17 @@ export default function Home() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 w-full max-w-5xl">
-          <div className="card m-0 p-8 flex flex-col items-center animate-slide-in stagger-1">
+          <div className="card m-0 p-8 flex flex-col items-center">
             <Users size={48} className="text-indigo-600 mb-4" />
             <h3 className="font-bold text-2xl mb-2">10k+ Developers</h3>
             <p className="text-gray">Growing community of skilled professionals</p>
           </div>
-          <div className="card m-0 p-8 flex flex-col items-center animate-slide-in stagger-2">
+          <div className="card m-0 p-8 flex flex-col items-center">
             <Code size={48} className="text-green-600 mb-4" />
             <h3 className="font-bold text-2xl mb-2">500+ Skills</h3>
             <p className="text-gray">Comprehensive skill mapping database</p>
           </div>
-          <div className="card m-0 p-8 flex flex-col items-center animate-slide-in stagger-3">
+          <div className="card m-0 p-8 flex flex-col items-center">
             <Database size={48} className="text-purple-600 mb-4" />
             <h3 className="font-bold text-2xl mb-2">AI Insights</h3>
             <p className="text-gray">Personalized career trajectory analysis</p>
