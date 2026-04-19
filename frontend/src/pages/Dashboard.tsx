@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, TrendingUp, Download, Award, BarChart2, FileText } from 'lucide-react';
+import { Plus, Edit2, TrendingUp, Award, BarChart2, FileText } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 
 interface Skill {
@@ -10,6 +11,7 @@ interface Skill {
 }
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [skills, setSkills] = useState<Skill[]>([]);
   const [allAvailableSkills, setAllAvailableSkills] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +27,7 @@ export default function Dashboard() {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const [userSkillsRes, allSkillsRes] = await Promise.all([
         api.get('/skills/me'),
         api.get('/skills')
@@ -38,47 +41,45 @@ export default function Dashboard() {
     }
   };
 
-  const handleUpdateSkill = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLevelChange = async (skillId: number, level: number) => {
     try {
-      await api.post('/skills/me', {
-        skillId: parseInt(newSkillId),
-        level: newSkillLevel
-      });
+      await api.put(`/skills/${skillId}`, { level });
+      setSkills(skills.map(s => s.id === skillId ? { ...s, level } : s));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleAddSkill = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newSkillId) return;
+    try {
+      await api.post('/skills', { skillId: parseInt(newSkillId), level: newSkillLevel });
       setShowAddModal(false);
       fetchData();
     } catch (err) {
-      alert('Failed to update skill');
+      console.error(err);
     }
   };
 
   if (loading) return <div className="container">Loading...</div>;
 
   const avgProficiency = skills.length > 0 ? (skills.reduce((acc, curr) => acc + curr.level, 0) / skills.length) : 0;
-  
-  const getRank = (avg: number) => {
-    if (skills.length === 0) return 'Newcomer';
-    if (avg < 4) return 'Junior Learner';
-    if (avg < 7) return 'Skilled Professional';
-    if (avg < 9) return 'Senior Expert';
-    return 'Master Architect';
-  };
-
   const categoryCounts = skills.reduce((acc, skill) => {
     acc[skill.category] = (acc[skill.category] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
   return (
-    <div className="container">
-      <div className="flex justify-between items-center mb-10 mt-4 animate-slide-in">
+    <div className="container" style={{ maxWidth: '1440px' }}>
+      <header className="flex justify-between items-end mb-12 animate-slide-in no-print">
         <div>
           <h1 className="text-4xl font-bold mb-3" style={{ color: 'var(--text-main)' }}>Skill Dashboard</h1>
           <p className="text-gray text-lg">Track your technical competencies dynamically</p>
         </div>
         <div className="flex gap-4">
           <button 
-            onClick={() => window.print()}
+            onClick={() => navigate('/resume')}
             className="group flex items-center gap-2"
             style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem', backgroundColor: 'var(--card-bg)', color: 'var(--text-main)', border: '1px solid var(--card-border)', transition: 'all 0.2s', borderRadius: '8px', cursor: 'pointer' }}
           >
@@ -89,166 +90,137 @@ export default function Dashboard() {
             className="btn-primary"
             style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}
           >
-            <Plus size={24} /> Update Skill
+            <Plus size={20} /> Add New Skill
           </button>
         </div>
-      </div>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-1 group hover:border-indigo-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
-            <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: 'var(--primary)', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
-              <TrendingUp size={36} />
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="card m-0 bg-white animate-slide-in stagger-1 group hover:border-indigo-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
+          <div className="flex items-center gap-4 mb-3">
+            <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+              <TrendingUp size={24} />
             </div>
-            <div>
-              <p className="text-gray text-sm font-bold tracking-wider mb-1">TOTAL SKILLS ACQUIRED</p>
-              <h2 className="text-5xl font-bold text-main">{skills.length}</h2>
-            </div>
+            <span className="text-gray font-medium uppercase tracking-wider text-sm">Experience Rank</span>
+          </div>
+          <div className="text-4xl font-bold text-main">Consultant</div>
+          <div className="text-sm text-green-500 mt-2 font-semibold">Top 15% of Developers</div>
         </div>
+
         <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-2 group hover:border-green-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
-            <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: 'var(--success)', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
-              <Edit2 size={36} />
-            </div>
-            <div>
-              <p className="text-gray text-sm font-bold tracking-wider mb-1">AVERAGE PROFICIENCY</p>
-              <h2 className="text-4xl font-bold text-main">{avgProficiency.toFixed(1)}<span className="text-xl text-gray"> / 10</span></h2>
-            </div>
+          <div className="p-3 bg-green-50 rounded-xl text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
+            <Award size={24} />
+          </div>
+          <div>
+            <span className="text-gray font-medium uppercase tracking-wider text-sm">Avg. Proficiency</span>
+            <div className="text-4xl font-bold text-main">{avgProficiency.toFixed(1)} / 5.0</div>
+          </div>
         </div>
-        <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-3 group hover:border-orange-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
-            <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: '#f97316', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
-              <Award size={36} />
-            </div>
-            <div>
-              <p className="text-gray text-sm font-bold tracking-wider mb-1">YOUR EXPERIENCE RANK</p>
-              <h2 className="text-3xl font-bold text-main mt-1 leading-tight text-transparent bg-clip-text" style={{ background: 'linear-gradient(135deg, #f97316 0%, #f59e0b 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{getRank(avgProficiency)}</h2>
-            </div>
+
+        <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-3 group hover:border-purple-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
+          <div className="p-3 bg-purple-50 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
+            <Plus size={24} />
+          </div>
+          <div>
+            <span className="text-gray font-medium uppercase tracking-wider text-sm">Total Skills</span>
+            <div className="text-4xl font-bold text-main">{skills.length} Loaded</div>
+          </div>
         </div>
       </div>
 
-      {skills.length > 0 && (
-        <div className="mb-10 animate-slide-in stagger-3">
-          <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><BarChart2 className="text-indigo-600"/> Skill Distribution by Category</h3>
-          <div className="flex gap-3 flex-wrap">
+      {/* Skill Distribution */}
+      <div className="card bg-white p-8 mb-12 animate-slide-in stagger-4 shadow-sm border" style={{ border: '1px solid var(--card-border)' }}>
+        <div className="flex justify-between items-center mb-8">
+          <h3 className="text-xl font-bold flex items-center gap-2 text-main"><BarChart2 className="text-indigo-600"/> Skill Distribution by Category</h3>
+          <div className="flex gap-4">
             {Object.entries(categoryCounts).map(([cat, count]) => (
-              <div key={cat} className="card m-0 flex items-center gap-3 px-6 py-3 bg-white" style={{ borderRadius: '999px', padding: '0.75rem 1.5rem' }}>
-                <span className="font-semibold">{cat}</span>
-                <span className="font-bold text-white flex items-center justify-center" style={{ backgroundColor: 'var(--primary)', width: '28px', height: '28px', borderRadius: '50%' }}>{count}</span>
+              <div key={cat} className="m-0 flex items-center gap-3 px-6 py-3 bg-gray-50 border rounded-full transition hover:bg-white" style={{ borderRadius: '999px', padding: '0.75rem 1.5rem' }}>
+                <span className="w-3 h-3 rounded-full bg-indigo-500"></span>
+                <span className="font-semibold text-main">{cat}</span>
+                <span className="bg-white px-2 py-0.5 rounded-full text-xs font-bold border">{count}</span>
               </div>
             ))}
           </div>
         </div>
-      )}
+      </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {skills.map((skill, index) => (
           <div 
             key={skill.id} 
-            className="card m-0 bg-white animate-slide-in group hover:border-primary" 
-            style={{ padding: '2rem', animationDelay: `${0.1 + (index * 0.1)}s`, cursor: 'pointer' }}
+            className="card m-0 bg-white animate-slide-in group hover:border-primary cursor-pointer overflow-hidden flex flex-col transition-all" 
+            style={{ padding: '0', border: '1px solid var(--card-border)', animationDelay: `${0.1 + (index * 0.1)}s` }}
             onClick={() => setExpandedCard(expandedCard === skill.id ? null : skill.id)}
           >
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h3 className="text-xl font-bold mb-2 text-main group-hover:text-primary transition">{skill.name}</h3>
-                <span className="text-xs font-bold bg-green-50" style={{ color: 'var(--success)', padding: '0.25rem 0.75rem', borderRadius: '9999px', border: '1px solid var(--success)' }}>
-                  {skill.category}
-                </span>
-              </div>
-              <div className="flex items-center gap-1 font-bold text-lg" style={{ color: 'var(--primary)' }}>
-                <TrendingUp size={18} /> {skill.level}/10
-              </div>
-            </div>
-            <div className="w-full rounded-full h-3 bg-gray-100 overflow-hidden">
-              <div 
-                className="h-3 rounded-full animate-width" 
-                style={{ 
-                  width: `${skill.level * 10}%`,
-                  backgroundColor: 'var(--primary)',
-                }}
-              ></div>
-            </div>
-            
-            {expandedCard === skill.id && (
-              <div className="mt-6 pt-4 border-t animate-fade-in" style={{ borderColor: 'var(--card-border)' }}>
-                <p className="text-sm font-semibold tracking-wider mb-3 text-main">QUICK ACTIONS:</p>
-                <div className="flex gap-2 flex-wrap">
-                  <a href={`https://developer.mozilla.org/en-US/search?q=${encodeURIComponent(skill.name)}`} target="_blank" rel="noreferrer" className="text-xs py-1.5 px-4 rounded-full bg-blue-50 text-blue-600 border border-blue-200 transition hover:bg-blue-100" onClick={(e) => e.stopPropagation()}>
-                    View Docs
-                  </a>
-                  <a href={`https://www.udemy.com/courses/search/?q=${encodeURIComponent(skill.name)}`} target="_blank" rel="noreferrer" className="text-xs py-1.5 px-4 rounded-full bg-purple-50 text-purple-600 border border-purple-200 transition hover:bg-purple-100" onClick={(e) => e.stopPropagation()}>
-                    Find Courses
-                  </a>
-                  <a href={`https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(skill.name)}`} target="_blank" rel="noreferrer" className="text-xs py-1.5 px-4 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 transition hover:bg-indigo-100" onClick={(e) => e.stopPropagation()}>
-                    Find Jobs
-                  </a>
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-1 block">{skill.category}</span>
+                  <h3 className="text-2xl font-bold text-main">{skill.name}</h3>
                 </div>
+                <div className="text-3xl font-bold text-slate-300 opacity-50 group-hover:opacity-100 group-hover:text-indigo-600 transition-all">L{skill.level}</div>
               </div>
-            )}
+
+              <div className="relative h-2 bg-gray-100 rounded-full mb-2 overflow-hidden">
+                <div 
+                  className="absolute top-0 left-0 h-full bg-indigo-600 rounded-full transition-all duration-1000 ease-out"
+                  style={{ width: `${(skill.level / 5) * 100}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-xs font-bold text-gray uppercase tracking-tighter">
+                <span>Novice</span>
+                <span>Expert</span>
+              </div>
+            </div>
+
+            {/* Quick Actions Expansion */}
+            <div className={`px-6 py-4 bg-gray-50 border-t transition-all duration-300 ${expandedCard === skill.id ? 'opacity-100 max-h-40' : 'opacity-0 max-h-0'}`}>
+              <div className="flex justify-between gap-2 overflow-hidden">
+                <a href={`https://docs.microsoft.com/en-us/search/?terms=${skill.name}`} target="_blank" className="flex-1 py-1 px-2 bg-white border text-center text-xs font-bold rounded-lg hover:bg-gray-100 text-main">Docs</a>
+                <a href={`https://www.coursera.org/search?query=${skill.name}`} target="_blank" className="flex-1 py-1 px-2 bg-white border text-center text-xs font-bold rounded-lg hover:bg-gray-100 text-main">Courses</a>
+                <a href={`https://www.linkedin.com/jobs/search/?keywords=${skill.name}`} target="_blank" className="flex-1 py-1 px-2 bg-indigo-600 text-white text-center text-xs font-bold rounded-lg hover:bg-indigo-700">Jobs</a>
+              </div>
+            </div>
           </div>
         ))}
-        {skills.length === 0 && (
-          <div className="col-span-2 text-center py-12 rounded-lg border-2 border-dashed bg-gray-50 border">
-            <p className="text-gray">No skills added yet. Start by adding your first skill!</p>
-          </div>
-        )}
       </div>
 
       {showAddModal && (
-        <div className="fixed inset-0 flex justify-center items-center z-10" style={{ backgroundColor: 'rgba(15, 23, 42, 0.5)', backdropFilter: 'blur(4px)' }}>
-          <div className="card w-full max-w-md m-0 flex flex-col bg-white">
-            <h2 className="text-2xl font-bold mb-6 text-main">Update Skill Level</h2>
-            <form onSubmit={handleUpdateSkill}>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in no-print">
+          <div className="card bg-white w-full max-w-md p-8 shadow-2xl animate-slide-in">
+            <h3 className="text-2xl font-bold mb-6 text-main">Add Technical Competency</h3>
+            <form onSubmit={handleAddSkill}>
               <div className="mb-6">
-                <label>Select Skill</label>
+                <label className="block text-sm font-bold text-gray uppercase mb-2">Select Skill</label>
                 <select 
-                  value={newSkillId}
-                  onChange={(e) => setNewSkillId(e.target.value)}
-                  required
+                  value={newSkillId} 
+                  onChange={e => setNewSkillId(e.target.value)}
+                  className="w-full p-4 rounded-xl border-2 focus:border-indigo-500 bg-white"
                 >
-                  <option value="">Select a skill</option>
+                  <option value="">Choose a skill...</option>
                   {allAvailableSkills.map(s => (
                     <option key={s.id} value={s.id}>{s.name} ({s.category})</option>
                   ))}
                 </select>
               </div>
               <div className="mb-8">
-                <label>Proficiency Level (1-10)</label>
-                <div className="flex items-center gap-4 mt-4 mb-2">
-                  <button 
-                    type="button"
-                    onClick={() => setNewSkillLevel(Math.max(1, newSkillLevel - 1))}
-                    style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%', fontSize: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-main)', border: '1px solid var(--card-border)', color: 'var(--text-main)', cursor: 'pointer', flexShrink: 0 }}
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="range" min="1" max="10" step="1"
-                    className="flex-1"
-                    style={{ accentColor: 'var(--primary)', margin: 0, height: '6px' }}
-                    value={newSkillLevel}
-                    onChange={(e) => setNewSkillLevel(parseInt(e.target.value))}
-                  />
-                  <button 
-                    type="button"
-                    onClick={() => setNewSkillLevel(Math.min(10, newSkillLevel + 1))}
-                    style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%', fontSize: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-main)', border: '1px solid var(--card-border)', color: 'var(--text-main)', cursor: 'pointer', flexShrink: 0 }}
-                  >
-                    +
-                  </button>
+                <label className="block text-sm font-bold text-gray uppercase mb-2">Proficiency Level (1-5)</label>
+                <input 
+                  type="range" min="1" max="5" 
+                  value={newSkillLevel} 
+                  onChange={e => setNewSkillLevel(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                />
+                <div className="flex justify-between text-xs font-bold text-gray mt-2">
+                  <span>Level 1</span>
+                  <span className="text-indigo-600">Level {newSkillLevel}</span>
+                  <span>Level 5</span>
                 </div>
-                <div className="text-center font-bold text-3xl mt-6" style={{ color: 'var(--primary)' }}>{newSkillLevel}</div>
               </div>
               <div className="flex gap-4">
-                <button 
-                  type="button"
-                  onClick={() => setShowAddModal(false)}
-                  className="w-full"
-                  style={{ background: 'transparent', borderColor: 'var(--card-border)' }}
-                >
-                  Cancel
-                </button>
-                <button type="submit" className="w-full btn-primary">
-                  Save Changes
-                </button>
+                <button type="button" onClick={() => setShowAddModal(false)} className="flex-1 py-4 font-bold text-gray hover:text-main">Cancel</button>
+                <button type="submit" className="flex-1 btn-primary py-4 rounded-xl text-lg">Add to Graph</button>
               </div>
             </form>
           </div>
