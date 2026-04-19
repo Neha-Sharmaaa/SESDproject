@@ -79,10 +79,10 @@ export default function Dashboard() {
         <div className="flex gap-4">
           <button 
             onClick={() => window.print()}
-            className="group"
-            style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem', backgroundColor: 'var(--card-bg)', color: 'var(--text-main)', border: '1px solid var(--card-border)', transition: 'all 0.2s' }}
+            className="group flex items-center gap-2"
+            style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem', backgroundColor: 'var(--card-bg)', color: 'var(--text-main)', border: '1px solid var(--card-border)', transition: 'all 0.2s', borderRadius: '8px', cursor: 'pointer' }}
           >
-            <Download size={20} className="group-hover:text-primary transition" /> Export CSV
+            <FileText size={20} className="group-hover:text-primary transition" /> Generate Resume
           </button>
           <button 
             onClick={() => { setNewSkillId(''); setNewSkillLevel(1); setShowAddModal(true); }}
