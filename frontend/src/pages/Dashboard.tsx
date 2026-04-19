@@ -68,6 +68,8 @@ export default function Dashboard() {
     return acc;
   }, {} as Record<string, number>);
 
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
   return (
     <div className="container">
       <div className="flex justify-between items-center mb-10 mt-4 animate-slide-in">
@@ -84,7 +86,7 @@ export default function Dashboard() {
             <Download size={20} className="group-hover:text-primary transition" /> Export CSV
           </button>
           <button 
-            onClick={() => setShowAddModal(true)}
+            onClick={() => { setNewSkillId(''); setNewSkillLevel(1); setShowAddModal(true); }}
             className="btn-primary"
             style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}
           >
@@ -139,7 +141,12 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-2 gap-6">
         {skills.map((skill, index) => (
-          <div key={skill.id} className="card m-0 bg-white animate-slide-in group hover:border-indigo-200" style={{ padding: '2rem', animationDelay: `${0.1 + (index * 0.1)}s` }}>
+          <div 
+            key={skill.id} 
+            className="card m-0 bg-white animate-slide-in group hover:border-primary" 
+            style={{ padding: '2rem', animationDelay: `${0.1 + (index * 0.1)}s`, cursor: 'pointer' }}
+            onClick={() => setExpandedCard(expandedCard === skill.id ? null : skill.id)}
+          >
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h3 className="text-xl font-bold mb-2 text-main group-hover:text-primary transition">{skill.name}</h3>
@@ -160,6 +167,23 @@ export default function Dashboard() {
                 }}
               ></div>
             </div>
+            
+            {expandedCard === skill.id && (
+              <div className="mt-6 pt-4 border-t animate-fade-in" style={{ borderColor: 'var(--card-border)' }}>
+                <p className="text-sm font-semibold tracking-wider mb-3 text-main">QUICK ACTIONS:</p>
+                <div className="flex gap-2 flex-wrap">
+                  <a href={`https://developer.mozilla.org/en-US/search?q=${encodeURIComponent(skill.name)}`} target="_blank" rel="noreferrer" className="text-xs py-1.5 px-4 rounded-full bg-blue-50 text-blue-600 border border-blue-200 transition hover:bg-blue-100" onClick={(e) => e.stopPropagation()}>
+                    View Docs
+                  </a>
+                  <a href={`https://www.udemy.com/courses/search/?q=${encodeURIComponent(skill.name)}`} target="_blank" rel="noreferrer" className="text-xs py-1.5 px-4 rounded-full bg-purple-50 text-purple-600 border border-purple-200 transition hover:bg-purple-100" onClick={(e) => e.stopPropagation()}>
+                    Find Courses
+                  </a>
+                  <a href={`https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(skill.name)}`} target="_blank" rel="noreferrer" className="text-xs py-1.5 px-4 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 transition hover:bg-indigo-100" onClick={(e) => e.stopPropagation()}>
+                    Find Jobs
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         ))}
         {skills.length === 0 && (
