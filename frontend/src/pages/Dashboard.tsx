@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, TrendingUp, Download, Award, BarChart2 } from 'lucide-react';
+import { Plus, Edit2, TrendingUp, Download, Award, BarChart2, FileText } from 'lucide-react';
 import api from '../utils/api';
 
 interface Skill {

@@ -386,3 +386,39 @@ label {
 .z-10 { z-index: 10; }
 
 .fill-white { fill: var(--bg-sidebar); }
+
+/* --- Print & Resume Export Formatting --- */
+@media print {
+  @page { margin: 1cm; }
+  
+  /* Strip UI Controls */
+  aside, button, select, input[type="range"] { display: none !important; }
+  
+  /* Reset Layout Constraints */
+  main { margin-left: 0 !important; padding: 0 !important; max-width: 100% !important; }
+  .container { padding: 0 !important; width: 100% !important; max-width: 100% !important; }
+  
+  /* Normalize Colors */
+  body, .dark, #root { 
+    background-color: white !important; 
+    color: black !important;
+    --bg-main: #ffffff;
+    --card-bg: #ffffff;
+    --text-main: #000000;
+  }
+  
+  /* Flatten Cards for PDF Processing */
+  .card { 
+    box-shadow: none !important; 
+    border: 1px solid #e2e8f0 !important; 
+    break-inside: avoid; 
+    padding: 1.5rem !important;
+    transform: none !important;
+  }
+  
+  /* Ensure backgrounds print correctly on WebKit */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
