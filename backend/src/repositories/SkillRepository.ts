@@ -18,10 +18,11 @@ export class SkillRepository extends BaseRepository<Skill> {
 
     async addUserSkill(userId: number, skillId: number, level: number): Promise<void> {
         const d = await this.db();
-        await d.run(`
-            INSERT INTO user_skills (user_id, skill_id, level) 
-            VALUES (?, ?, ?)
-            ON CONFLICT(user_id, skill_id) DO UPDATE SET level = excluded.level
-        `, [userId, skillId, level]);
+        const existing = await d.get(`SELECT * FROM user_skills WHERE user_id = ? AND skill_id = ?`, [userId, skillId]);
+        if (existing) {
+            await d.run(`UPDATE user_skills SET level = ? WHERE user_id = ? AND skill_id = ?`, [level, userId, skillId]);
+        } else {
+            await d.run(`INSERT INTO user_skills (user_id, skill_id, level) VALUES (?, ?, ?)`, [userId, skillId, level]);
+        }
     }
 }
