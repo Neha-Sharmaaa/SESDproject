@@ -40,7 +40,8 @@ export async function initDatabase() {
       skill_id INTEGER,
       level INTEGER,
       FOREIGN KEY (user_id) REFERENCES users(id),
-      FOREIGN KEY (skill_id) REFERENCES skills(id)
+      FOREIGN KEY (skill_id) REFERENCES skills(id),
+      UNIQUE(user_id, skill_id)
     );
 
     CREATE TABLE IF NOT EXISTS career_roles (
