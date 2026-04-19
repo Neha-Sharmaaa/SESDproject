@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
-import { Layout, User, Award, BookOpen, LogOut, Target, Sun, Moon } from 'lucide-react';
+import { Layout, User, Award, BookOpen, LogOut, Target, Sun, Moon, FileText } from 'lucide-react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Recommendations from './pages/Recommendations';
 import Roadmap from './pages/Roadmap';
 import Home from './pages/Home';
+import ResumeBuilder from './pages/ResumeBuilder';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -52,6 +53,9 @@ function App() {
                 <Link to="/recommendations" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
                   <Target size={20} className="text-gray" /> Career Paths
                 </Link>
+                <Link to="/resume" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                  <FileText size={20} className="text-gray" /> Resume Builder
+                </Link>
               </div>
             </div>
             
@@ -86,6 +90,7 @@ function App() {
               <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
               <Route path="/recommendations" element={isAuthenticated ? <Recommendations /> : <Navigate to="/login" />} />
               <Route path="/roadmap/:careerId" element={isAuthenticated ? <Roadmap /> : <Navigate to="/login" />} />
+              <Route path="/resume" element={isAuthenticated ? <ResumeBuilder /> : <Navigate to="/login" />} />
             </Routes>
           </div>
         </main>
