@@ -21,9 +21,9 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-8 py-20 flex flex-col items-center justify-center text-center animate-fade-in" style={{ minHeight: '80vh' }}>
+      <section className="px-8 py-20 flex flex-col items-center justify-center text-center animate-slide-in" style={{ minHeight: '80vh' }}>
         <h1 className="text-6xl font-bold mb-6 max-w-4xl tracking-tight leading-tight">
-          Welcome to <span style={{ color: 'var(--primary)' }}>SkillGraph</span>
+          Welcome to <span className="text-gradient animate-float inline-block">SkillGraph</span>
         </h1>
         <p className="text-xl text-gray max-w-2xl mb-12 leading-relaxed">
           Incorporated strategy, design, and technology to build what's next. 
@@ -49,24 +49,24 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card m-0" style={{ padding: '2.5rem' }}>
-              <div style={{ color: 'var(--primary)', marginBottom: '1.5rem' }}><Users size={40} /></div>
-              <h3 className="text-xl font-bold mb-3">Staffing & Recruitment</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 animate-slide-in stagger-1">
+            <div className="card m-0 group" style={{ padding: '2.5rem' }}>
+              <div className="text-indigo-600 mb-6 group-hover:scale-110 transition-transform duration-300"><Users size={48} /></div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition">Staffing & Recruitment</h3>
               <p className="text-gray text-sm leading-relaxed">
                 We provide recruitment process outsourcing (RPO) services specializing in building high-performing technical teams. Whether you need an on-demand workforce or full-time devs, we acquire the best.
               </p>
             </div>
-            <div className="card m-0" style={{ padding: '2.5rem' }}>
-              <div style={{ color: 'var(--accent)', marginBottom: '1.5rem' }}><Code size={40} /></div>
-              <h3 className="text-xl font-bold mb-3">Software Development</h3>
+            <div className="card m-0 group" style={{ padding: '2.5rem' }}>
+              <div className="text-accent mb-6 group-hover:scale-110 transition-transform duration-300"><Code size={48} /></div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition">Software Development</h3>
               <p className="text-gray text-sm leading-relaxed">
                 Expert consultants guide you through the entire software development lifecycle, ensuring scalability and security aligned perfectly with your corporate strategy.
               </p>
             </div>
-            <div className="card m-0" style={{ padding: '2.5rem' }}>
-              <div style={{ color: '#10b981', marginBottom: '1.5rem' }}><Database size={40} /></div>
-              <h3 className="text-xl font-bold mb-3">Big Data Analytics</h3>
+            <div className="card m-0 group" style={{ padding: '2.5rem' }}>
+              <div className="text-green-500 mb-6 group-hover:scale-110 transition-transform duration-300"><Database size={48} /></div>
+              <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition">Big Data Analytics</h3>
               <p className="text-gray text-sm leading-relaxed">
                 Unlock the power of data. We help you gather, process, and analyze large datasets to derive actionable insights, improving decision-making and operational efficiency.
               </p>
@@ -76,11 +76,11 @@ export default function Home() {
       </section>
 
       {/* Training Services */}
-      <section id="training" className="px-8 py-24 max-w-7xl mx-auto relative">
-        <h2 className="text-4xl font-bold mb-12 text-center">Industry-Leading Training</h2>
+      <section id="training" className="px-8 py-24 max-w-7xl mx-auto relative animate-slide-in stagger-2">
+        <h2 className="text-4xl font-bold mb-12 text-center text-main">Industry-Leading Training</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-8 rounded-2xl bg-white border">
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><Cloud className="text-indigo-600" /> Salesforce Training</h3>
+          <div className="p-8 rounded-2xl bg-white border group hover:border-indigo-200 transition">
+            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><Cloud className="text-indigo-600 group-hover:scale-110 transition-transform" /> Salesforce Training</h3>
             <ul className="text-gray space-y-3 mb-6">
               <li className="flex items-center gap-2"><ArrowRight size={14} className="text-indigo-500" /> Salesforce Administration</li>
               <li className="flex items-center gap-2"><ArrowRight size={14} className="text-indigo-500" /> Salesforce Platform Developer I</li>
@@ -88,8 +88,8 @@ export default function Home() {
             </ul>
           </div>
           
-          <div className="p-8 rounded-2xl bg-white border">
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><Database className="text-green-500" /> Data Science & Engineering</h3>
+          <div className="p-8 rounded-2xl bg-white border group hover:border-green-200 transition">
+            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><Database className="text-green-500 group-hover:scale-110 transition-transform" /> Data Science & Engineering</h3>
             <ul className="text-gray space-y-3 mb-6">
               <li className="flex items-center gap-2"><ArrowRight size={14} className="text-green-500" /> Big Data Analytics</li>
               <li className="flex items-center gap-2"><ArrowRight size={14} className="text-green-500" /> Full Stack Data Analyst</li>
@@ -97,8 +97,8 @@ export default function Home() {
             </ul>
           </div>
 
-          <div className="p-8 rounded-2xl bg-white border">
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><Code className="text-purple-500" /> DevOps & Software Cloud</h3>
+          <div className="p-8 rounded-2xl bg-white border group hover:border-purple-200 transition">
+            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3"><Code className="text-purple-500 group-hover:scale-110 transition-transform" /> DevOps & Software Cloud</h3>
             <ul className="text-gray space-y-3 mb-6">
               <li className="flex items-center gap-2"><ArrowRight size={14} className="text-purple-500" /> Angular Framework</li>
               <li className="flex items-center gap-2"><ArrowRight size={14} className="text-purple-500" /> Backend Engineering</li>
