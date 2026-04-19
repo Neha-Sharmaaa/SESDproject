@@ -79,13 +79,6 @@ export default function Dashboard() {
         </div>
         <div className="flex gap-4">
           <button 
-            onClick={() => navigate('/resume')}
-            className="group flex items-center gap-2"
-            style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem', backgroundColor: 'var(--card-bg)', color: 'var(--text-main)', border: '1px solid var(--card-border)', transition: 'all 0.2s', borderRadius: '8px', cursor: 'pointer' }}
-          >
-            <FileText size={20} className="group-hover:text-primary transition" /> Generate Resume
-          </button>
-          <button 
             onClick={() => { setNewSkillId(''); setNewSkillLevel(1); setShowAddModal(true); }}
             className="btn-primary"
             style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}
@@ -97,7 +90,7 @@ export default function Dashboard() {
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="card m-0 bg-white animate-slide-in stagger-1 group hover:border-indigo-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
+        <div className="card" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
           <div className="flex items-center gap-4 mb-3">
             <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
               <TrendingUp size={24} />
@@ -108,7 +101,7 @@ export default function Dashboard() {
           <div className="text-sm text-green-500 mt-2 font-semibold">Top 15% of Developers</div>
         </div>
 
-        <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-2 group hover:border-green-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
+        <div className="card" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
           <div className="p-3 bg-green-50 rounded-xl text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
             <Award size={24} />
           </div>
@@ -118,7 +111,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-3 group hover:border-purple-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
+        <div className="card" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
           <div className="p-3 bg-purple-50 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
             <Plus size={24} />
           </div>
@@ -130,7 +123,7 @@ export default function Dashboard() {
       </div>
 
       {/* Skill Distribution */}
-      <div className="card bg-white p-8 mb-12 animate-slide-in stagger-4 shadow-sm border" style={{ border: '1px solid var(--card-border)' }}>
+      <div className="card" style={{ border: '1px solid var(--card-border)' }}>
         <div className="flex justify-between items-center mb-8">
           <h3 className="text-xl font-bold flex items-center gap-2 text-main"><BarChart2 className="text-indigo-600"/> Skill Distribution by Category</h3>
           <div className="flex gap-4">
@@ -149,7 +142,7 @@ export default function Dashboard() {
         {skills.map((skill, index) => (
           <div 
             key={skill.id} 
-            className="card m-0 bg-white animate-slide-in group hover:border-primary cursor-pointer overflow-hidden flex flex-col transition-all" 
+            className="card" 
             style={{ padding: '0', border: '1px solid var(--card-border)', animationDelay: `${0.1 + (index * 0.1)}s` }}
             onClick={() => setExpandedCard(expandedCard === skill.id ? null : skill.id)}
           >
