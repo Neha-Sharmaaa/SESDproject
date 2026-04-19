@@ -21,5 +21,6 @@ router.get('/careers/roadmap/:careerId', authenticate, (req, res) => careerContr
 router.get('/skills', authenticate, (req, res) => skillController.getAllSkills(req, res));
 router.get('/skills/me', authenticate, (req, res) => skillController.getUserSkills(req, res));
 router.post('/skills/me', authenticate, (req, res) => skillController.updateUserSkill(req, res));
+router.delete('/skills/me/:skillId', authenticate, (req, res) => skillController.deleteUserSkill(req, res));
 
 export default router;

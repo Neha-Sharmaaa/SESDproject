@@ -28,4 +28,8 @@ export class SkillService {
         if (level < 1 || level > 10) throw new Error('Level must be between 1 and 10');
         await this.skillRepo.addUserSkill(userId, skillId, level);
     }
+
+    async deleteUserSkill(userId: number, skillId: number) {
+        await this.skillRepo.removeUserSkill(userId, skillId);
+    }
 }

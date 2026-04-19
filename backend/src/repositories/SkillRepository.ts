@@ -25,4 +25,9 @@ export class SkillRepository extends BaseRepository<Skill> {
             await d.run(`INSERT INTO user_skills (user_id, skill_id, level) VALUES (?, ?, ?)`, [userId, skillId, level]);
         }
     }
+
+    async removeUserSkill(userId: number, skillId: number): Promise<void> {
+        const d = await this.db();
+        await d.run(`DELETE FROM user_skills WHERE user_id = ? AND skill_id = ?`, [userId, skillId]);
+    }
 }
