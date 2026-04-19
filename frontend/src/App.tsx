@@ -83,7 +83,7 @@ function App() {
         )}
 
         <main className="flex-1" style={{ marginLeft: isAuthenticated ? '260px' : '0', display: 'flex', flexDirection: 'column' }}>
-          <div className="flex-1 animate-fade-in" style={{ maxWidth: isAuthenticated ? '1440px' : '100%', margin: '0 auto', width: '100%', padding: isAuthenticated ? '2rem' : '0' }}>
+          <div className="flex-1" style={{ maxWidth: isAuthenticated ? '1440px' : '100%', margin: '0 auto', width: '100%', padding: isAuthenticated ? '2rem' : '0' }}>
             <Routes>
               <Route path="/" element={!isAuthenticated ? <Home /> : <Navigate to="/dashboard" />} />
               <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
