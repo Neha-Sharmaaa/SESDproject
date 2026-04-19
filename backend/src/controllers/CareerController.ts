@@ -17,7 +17,7 @@ export class CareerController {
     async getRoadmap(req: AuthRequest, res: Response) {
         try {
             const { careerId } = req.params;
-            const roadmap = await this.careerService.getRoadmap(parseInt(careerId), req.user.id);
+            const roadmap = await this.careerService.getRoadmap(parseInt(careerId as string), req.user.id);
             res.json(roadmap);
         } catch (err: any) {
             res.status(500).json({ message: err.message });
