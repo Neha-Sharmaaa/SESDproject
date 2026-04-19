@@ -104,10 +104,26 @@ export default function ResumeBuilder() {
                 <div key={exp.id} className="relative group">
                   <button onClick={() => setExperience(experience.filter(e => e.id !== exp.id))} className="absolute -right-2 -top-2 p-1 bg-red-100 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition"><Trash2 size={14}/></button>
                   <div className="grid grid-cols-2 gap-3">
-                    <input type="text" placeholder="Company" value={exp.company} onChange={e => { const newExp = [...experience]; newExp[index].company = e.target.value; setExperience(newExp); }} />
-                    <input type="text" placeholder="Role" value={exp.role} onChange={e => { const newExp = [...experience]; newExp[index].role = e.target.value; setExperience(newExp); }} />
-                    <input type="text" placeholder="Duration (e.g. 2021 - Present)" value={exp.duration} onChange={e => { const newExp = [...experience]; newExp[index].duration = e.target.value; setExperience(newExp); }} className="col-span-2" />
-                    <input type="text" placeholder="Description / Achievements" value={exp.description} onChange={e => { const newExp = [...experience]; newExp[index].description = e.target.value; setExperience(newExp); }} className="col-span-2" />
+                    <input type="text" placeholder="Company" value={exp.company} onChange={e => { 
+                      const newExp = [...experience]; 
+                      newExp[index] = { ...newExp[index], company: e.target.value }; 
+                      setExperience(newExp); 
+                    }} />
+                    <input type="text" placeholder="Role" value={exp.role} onChange={e => { 
+                      const newExp = [...experience]; 
+                      newExp[index] = { ...newExp[index], role: e.target.value }; 
+                      setExperience(newExp); 
+                    }} />
+                    <input type="text" placeholder="Duration (e.g. 2021 - Present)" value={exp.duration} onChange={e => { 
+                      const newExp = [...experience]; 
+                      newExp[index] = { ...newExp[index], duration: e.target.value }; 
+                      setExperience(newExp); 
+                    }} className="col-span-2" />
+                    <input type="text" placeholder="Description / Achievements" value={exp.description} onChange={e => { 
+                      const newExp = [...experience]; 
+                      newExp[index] = { ...newExp[index], description: e.target.value }; 
+                      setExperience(newExp); 
+                    }} className="col-span-2" />
                   </div>
                 </div>
               ))}
@@ -129,10 +145,26 @@ export default function ResumeBuilder() {
                 <div key={proj.id} className="relative group">
                   <button onClick={() => setProjects(projects.filter(p => p.id !== proj.id))} className="absolute -right-2 -top-2 p-1 bg-red-100 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition"><Trash2 size={14}/></button>
                   <div className="grid grid-cols-2 gap-3">
-                    <input type="text" placeholder="Project Name" value={proj.name} onChange={e => { const newProj = [...projects]; newProj[index].name = e.target.value; setProjects(newProj); }} className="col-span-2" />
-                    <input type="text" placeholder="Code Link (e.g. github.com/...)" value={proj.codeLink} onChange={e => { const newProj = [...projects]; newProj[index].codeLink = e.target.value; setProjects(newProj); }} />
-                    <input type="text" placeholder="Hosted Link (Optional)" value={proj.liveLink} onChange={e => { const newProj = [...projects]; newProj[index].liveLink = e.target.value; setProjects(newProj); }} />
-                    <input type="text" placeholder="Description" value={proj.desc} onChange={e => { const newProj = [...projects]; newProj[index].desc = e.target.value; setProjects(newProj); }} className="col-span-2" />
+                    <input type="text" placeholder="Project Name" value={proj.name} onChange={e => { 
+                      const newProj = [...projects]; 
+                      newProj[index] = { ...newProj[index], name: e.target.value }; 
+                      setProjects(newProj); 
+                    }} className="col-span-2" />
+                    <input type="text" placeholder="Code Link (e.g. github.com/...)" value={proj.codeLink} onChange={e => { 
+                      const newProj = [...projects]; 
+                      newProj[index] = { ...newProj[index], codeLink: e.target.value }; 
+                      setProjects(newProj); 
+                    }} />
+                    <input type="text" placeholder="Hosted Link (Optional)" value={proj.liveLink} onChange={e => { 
+                      const newProj = [...projects]; 
+                      newProj[index] = { ...newProj[index], liveLink: e.target.value }; 
+                      setProjects(newProj); 
+                    }} />
+                    <input type="text" placeholder="Description" value={proj.desc} onChange={e => { 
+                      const newProj = [...projects]; 
+                      newProj[index] = { ...newProj[index], desc: e.target.value }; 
+                      setProjects(newProj); 
+                    }} className="col-span-2" />
                   </div>
                 </div>
               ))}
@@ -153,10 +185,26 @@ export default function ResumeBuilder() {
               {education.map((edu, index) => (
                 <div key={edu.id} className="relative group grid grid-cols-2 gap-3">
                   <button onClick={() => setEducation(education.filter(e => e.id !== edu.id))} className="absolute -right-2 -top-2 p-1 bg-red-100 text-red-500 rounded-full opacity-0 group-hover:opacity-100 transition"><Trash2 size={14}/></button>
-                  <input type="text" placeholder="Institution" value={edu.school} onChange={e => { const arr = [...education]; arr[index].school = e.target.value; setEducation(arr); }} />
-                  <input type="text" placeholder="Degree" value={edu.degree} onChange={e => { const arr = [...education]; arr[index].degree = e.target.value; setEducation(arr); }} />
-                  <input type="text" placeholder="Duration" value={edu.duration} onChange={e => { const arr = [...education]; arr[index].duration = e.target.value; setEducation(arr); }} />
-                  <input type="text" placeholder="Details (GPA, awards)" value={edu.desc} onChange={e => { const arr = [...education]; arr[index].desc = e.target.value; setEducation(arr); }} />
+                  <input type="text" placeholder="Institution" value={edu.school} onChange={e => { 
+                    const arr = [...education]; 
+                    arr[index] = { ...arr[index], school: e.target.value }; 
+                    setEducation(arr); 
+                  }} />
+                  <input type="text" placeholder="Degree" value={edu.degree} onChange={e => { 
+                    const arr = [...education]; 
+                    arr[index] = { ...arr[index], degree: e.target.value }; 
+                    setEducation(arr); 
+                  }} />
+                  <input type="text" placeholder="Duration" value={edu.duration} onChange={e => { 
+                    const arr = [...education]; 
+                    arr[index] = { ...arr[index], duration: e.target.value }; 
+                    setEducation(arr); 
+                  }} />
+                  <input type="text" placeholder="Details (GPA, awards)" value={edu.desc} onChange={e => { 
+                    const arr = [...education]; 
+                    arr[index] = { ...arr[index], desc: e.target.value }; 
+                    setEducation(arr); 
+                  }} />
                 </div>
               ))}
             </div>
@@ -176,7 +224,11 @@ export default function ResumeBuilder() {
               {achievements.map((ach, index) => (
                 <div key={ach.id} className="relative group flex gap-2">
                   <button onClick={() => setAchievements(achievements.filter(a => a.id !== ach.id))} className="text-red-500 hover:bg-red-50 p-2 rounded transition"><Trash2 size={16}/></button>
-                  <input type="text" className="flex-1" placeholder="Achievement detail..." value={ach.text} onChange={e => { const arr = [...achievements]; arr[index].text = e.target.value; setAchievements(arr); }} />
+                  <input type="text" className="flex-1" placeholder="Achievement detail..." value={ach.text} onChange={e => { 
+                    const arr = [...achievements]; 
+                    arr[index] = { ...arr[index], text: e.target.value }; 
+                    setAchievements(arr); 
+                  }} />
                 </div>
               ))}
             </div>

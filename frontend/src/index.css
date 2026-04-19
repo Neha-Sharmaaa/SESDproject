@@ -392,12 +392,25 @@ label {
   @page { margin: 1cm; }
   
   /* Strip UI Controls */
-  aside, button, select, input[type="range"] { display: none !important; }
+  aside, button, select, input[type="range"], .no-print { display: none !important; }
   
   /* Reset Layout Constraints */
   main { margin-left: 0 !important; padding: 0 !important; max-width: 100% !important; }
   .container { padding: 0 !important; width: 100% !important; max-width: 100% !important; }
   
+  .print-fullscreen {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .print-canvas {
+    border: none !important;
+  }
+
   /* Normalize Colors */
   body, .dark, #root { 
     background-color: white !important; 
