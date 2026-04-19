@@ -157,9 +157,30 @@ button {
   color: var(--primary);
 }
 
+.nav-link svg {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover svg, .nav-link-active svg {
+  color: var(--primary);
+}
+
+.nav-link-active {
+  background-color: var(--bg-main);
+  color: var(--primary);
+  font-weight: 700;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  margin-left: -24px;
+  padding-left: 21px;
+}
+
 .hover\:border-primary:hover {
   border-color: var(--primary) !important;
 }
+
+:focus { outline: none; }
 
 button:hover {
   background-color: #f1f5f9;

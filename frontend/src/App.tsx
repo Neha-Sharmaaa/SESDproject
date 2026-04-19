@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, NavLink } from 'react-router-dom';
 import { Layout, User, Award, BookOpen, LogOut, Target, Sun, Moon, FileText } from 'lucide-react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -47,15 +47,15 @@ function App() {
                 <Award size={28} className="text-indigo-600" /> <span>SkillGraph</span>
               </Link>
               <div className="flex flex-col gap-2">
-                <Link to="/dashboard" className="nav-link">
-                  <Layout size={20} className="text-gray" /> My Dashboard
-                </Link>
-                <Link to="/recommendations" className="nav-link">
-                  <Target size={20} className="text-gray" /> Career Paths
-                </Link>
-                <Link to="/resume" className="nav-link">
-                  <FileText size={20} className="text-gray" /> Resume Builder
-                </Link>
+                <NavLink to="/dashboard" className={({isActive}) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
+                  <Layout size={20} /> My Dashboard
+                </NavLink>
+                <NavLink to="/recommendations" className={({isActive}) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
+                  <Target size={20} /> Career Paths
+                </NavLink>
+                <NavLink to="/resume" className={({isActive}) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
+                  <FileText size={20} /> Resume Builder
+                </NavLink>
               </div>
             </div>
             
