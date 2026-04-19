@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
-import { Layout, User, Award, BookOpen, LogOut, Target } from 'lucide-react';
+import { Layout, User, Award, BookOpen, LogOut, Target, Sun, Moon } from 'lucide-react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Recommendations from './pages/Recommendations';
@@ -9,6 +9,17 @@ import Home from './pages/Home';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleAuthChange = () => {
@@ -44,15 +55,23 @@ function App() {
               </div>
             </div>
             
-            <button 
-              onClick={logout} 
-              className="flex items-center gap-3 p-3 rounded-lg w-full transition bg-white"
+            <div className="flex flex-col gap-4">
+              <button 
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} 
+                className="flex justify-between items-center p-3 rounded-lg w-full transition bg-gray-50 bg-white"
+                style={{ color: 'var(--text-main)', border: '1px solid var(--card-border)', cursor: 'pointer' }}
+              >
+                <div className="flex items-center gap-3">
+                  {theme === 'light' ? <Moon size={20} className="text-indigo-600" /> : <Sun size={20} className="text-orange-400" />} 
+                  <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+                </div>
+              </button>
+
+              <button 
+                onClick={logout} 
+                className="flex items-center gap-3 p-3 rounded-lg w-full transition bg-white"
               style={{ color: 'var(--danger)', border: '1px solid var(--danger-bg)', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--danger-bg)'}
-              onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'white'}
-            >
-              <LogOut size={20} /> Logout
-            </button>
+            </div>
           </aside>
         )}
 
