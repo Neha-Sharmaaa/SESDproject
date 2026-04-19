@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link, NavLink } from 'react-router-dom';
-import { Layout, User, Award, BookOpen, LogOut, Target, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Target, LogOut, Sun, Moon } from 'lucide-react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Recommendations from './pages/Recommendations';
 import Roadmap from './pages/Roadmap';
 import Home from './pages/Home';
 
+/* ── Inline SVG Squiggle + Pencil Texture filter (global, invisible) ── */
+const SketchFilters = () => (
+  <svg style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+    <defs>
+      <filter id="squiggle" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise" seed="2" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="pencil-texture">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" />
+        <feColorMatrix type="saturate" values="0" />
+        <feBlend in="SourceGraphic" in2="noise" mode="multiply" />
+      </filter>
+    </defs>
+  </svg>
+);
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    if (theme === 'dark') document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const logout = () => {
@@ -37,56 +43,71 @@ function App() {
 
   return (
     <Router>
-      <div className="w-full flex" style={{ minHeight: '100vh', backgroundColor: 'var(--bg-main)' }}>
-        {isAuthenticated && (
-          <aside className={`flex flex-col justify-between py-8 px-6 glass-effect ${isScrolled ? 'sidebar-scrolled' : ''}`} style={{ position: 'fixed', left: 0, top: 0, bottom: 0, width: '260px', borderRight: '1px solid var(--card-border)', zIndex: 1000 }}>
-            <div>
-              <Link to="/dashboard" className="text-2xl font-bold flex items-center gap-3 mb-10" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
-                <Award size={32} className="text-indigo-500" /> <span style={{ letterSpacing: '-0.03em' }}>SkillGraph</span>
-              </Link>
-              <div className="flex flex-col gap-3">
-                <NavLink to="/dashboard" className={({isActive}) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
-                  <Layout size={20} /> My Dashboard
-                </NavLink>
-                <NavLink to="/recommendations" className={({isActive}) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
-                  <Target size={20} /> Career Paths
-                </NavLink>
-              </div>
-            </div>
-            
-            <div className="flex flex-col gap-4">
-              <button 
-                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} 
-                className="flex justify-between items-center p-3 rounded-xl w-full transition glass-effect"
-                style={{ color: 'var(--text-main)', border: '1px solid var(--card-border)', cursor: 'pointer' }}
-              >
-                <div className="flex items-center gap-3">
-                  {theme === 'light' ? <Moon size={20} className="text-indigo-500" /> : <Sun size={20} className="text-orange-400" />} 
-                  <span className="font-semibold">{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
-                </div>
-              </button>
+      <SketchFilters />
+      <div style={{ display: 'flex', minHeight: '100vh' }}>
 
-              <button 
-                onClick={logout} 
-                className="flex items-center gap-3 p-3 rounded-xl w-full transition"
-                style={{ color: 'var(--danger)', backgroundColor: 'var(--danger-bg)', border: '1px solid rgba(239, 68, 68, 0.1)', cursor: 'pointer', fontWeight: 600 }}
+        {isAuthenticated && (
+          <aside style={{
+            position: 'fixed', left: 0, top: 0, bottom: 0, width: '248px',
+            backgroundColor: 'var(--bg-sidebar)',
+            borderRight: '2px solid var(--text-main)',
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            padding: '1.5rem 1rem',
+            zIndex: 50,
+          }}>
+            <div>
+              {/* Brand */}
+              <Link to="/dashboard" style={{ textDecoration: 'none', display: 'block', marginBottom: '2rem', padding: '0.25rem 0.5rem' }}>
+                <div style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.6rem', fontWeight: 700, color: 'var(--text-main)', lineHeight: 1 }}>
+                  SkillGraph
+                </div>
+                <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.15em', textTransform: 'uppercase', marginTop: '0.2rem' }}>
+                  Career Copilot
+                </div>
+              </Link>
+
+              {/* Tape decoration */}
+              <div className="tape" style={{ fontSize: '0.65rem', fontWeight: 700, color: '#92400e', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.25rem', display: 'block' }}>
+                Navigation
+              </div>
+
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
+                  <LayoutDashboard size={16} /> Dashboard
+                </NavLink>
+                <NavLink to="/recommendations" className={({ isActive }) => isActive ? 'nav-link nav-link-active' : 'nav-link'}>
+                  <Target size={16} /> Career Paths
+                </NavLink>
+              </nav>
+            </div>
+
+            {/* Bottom */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <button
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                style={{ justifyContent: 'flex-start', boxShadow: '2px 2px 0px var(--text-main)', fontSize: '0.8rem' }}
               >
-                <LogOut size={20} /> Logout
+                {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
+                {theme === 'light' ? 'Dark mode' : 'Light mode'}
+              </button>
+              <button
+                onClick={logout}
+                style={{ justifyContent: 'flex-start', boxShadow: '2px 2px 0px var(--text-main)', fontSize: '0.8rem', borderColor: '#ef4444', color: '#ef4444', boxShadow: '2px 2px 0px #ef4444' as any }}
+              >
+                <LogOut size={15} /> Sign out
               </button>
             </div>
           </aside>
         )}
 
-        <main className="flex-1" style={{ marginLeft: isAuthenticated ? '260px' : '0', display: 'flex', flexDirection: 'column' }}>
-          <div className="flex-1" style={{ maxWidth: isAuthenticated ? '1440px' : '100%', margin: '0 auto', width: '100%', padding: isAuthenticated ? '2.5rem' : '0' }}>
-            <Routes>
-              <Route path="/" element={!isAuthenticated ? <Home /> : <Navigate to="/dashboard" />} />
-              <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
-              <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
-              <Route path="/recommendations" element={isAuthenticated ? <Recommendations /> : <Navigate to="/login" />} />
-              <Route path="/roadmap/:careerId" element={isAuthenticated ? <Roadmap /> : <Navigate to="/login" />} />
-            </Routes>
-          </div>
+        <main style={{ flex: 1, marginLeft: isAuthenticated ? '248px' : 0 }}>
+          <Routes>
+            <Route path="/" element={!isAuthenticated ? <Home /> : <Navigate to="/dashboard" />} />
+            <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+            <Route path="/recommendations" element={isAuthenticated ? <Recommendations /> : <Navigate to="/login" />} />
+            <Route path="/roadmap/:careerId" element={isAuthenticated ? <Roadmap /> : <Navigate to="/login" />} />
+          </Routes>
         </main>
       </div>
     </Router>

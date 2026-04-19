@@ -1,150 +1,223 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Cloud, Database, Code, Users, Award, ArrowRight, BookOpen, ChevronRight } from 'lucide-react';
+import { Target, Zap, BookOpen, BarChart2, Shield, ArrowRight, CheckCircle } from 'lucide-react';
+
+const features = [
+  { icon: <Target size={22} />, title: '3-Subject Skill Setup', desc: 'Create career categories & add your skills for each. Multiple proficiency levels supported.' },
+  { icon: <Zap size={22} />, title: 'Scoped Roadmaps', desc: 'Pick a career path, ask questions, get answers strictly from verified industry data.' },
+  { icon: <BookOpen size={22} />, title: 'Citations & Evidence', desc: 'Every recommendation includes docs links, courses, and job market evidence.' },
+  { icon: <BarChart2 size={22} />, title: 'Gap Analysis', desc: 'See exactly which skills separate you from a Senior, Staff, or Principal Engineer role.' },
+  { icon: <Shield size={22} />, title: '"Not Found" Handling', desc: 'No hallucination. If a skill isn\'t in the graph, you get a clear "data not available" response.' },
+  { icon: <CheckCircle size={22} />, title: 'Instant & Accurate', desc: 'Real-time readiness tracking. Add skills and watch your career score change live.' },
+];
+
+const howItWorks = [
+  { title: 'Register Your Skills', desc: 'Open the dashboard, add technologies you know, and rate your proficiency level 1–5.' },
+  { title: 'Explore Career Paths', desc: 'Browse AI-matched career tracks. See exactly which skills are missing for your target role.' },
+  { title: 'Track & Grow', desc: 'As you learn, update your profile. Your readiness score recalculates in real-time.' },
+];
+
+/* Sticky note colors */
+const stickyColors = ['#fef9c3', '#dcfce7', '#dbeafe', '#fce7f3', '#fef3c7', '#e0e7ff'];
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="w-full min-h-screen overflow-x-hidden" style={{ backgroundColor: 'var(--bg-main)' }}>
-      {/* Premium Sticky Navbar */}
-      <nav className={`fixed top-0 left-0 right-0 transition-all duration-300 z-[1000] flex justify-center py-4`}>
-        <div className={`flex justify-between items-center px-8 w-full max-w-7xl mx-4 rounded-2xl transition-all duration-300 ${isScrolled ? 'header-scrolled mt-2' : 'py-4'}`}>
-          <Link to="/" className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--primary)', textDecoration: 'none', letterSpacing: '-0.04em' }}>
-            <Award size={32} className="text-indigo-500" /> SkillGraph
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-paper)' }}>
+
+      {/* ── NAV ── */}
+      <nav style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '1.25rem 2rem', borderBottom: '2px solid var(--text-main)',
+        backgroundColor: 'var(--bg-sidebar)', position: 'sticky', top: 0, zIndex: 100,
+      }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <span style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-main)' }}>SkillGraph</span>
+          <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600, marginLeft: '0.5rem' }}>• Career Copilot</span>
+        </Link>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <Link to="/login" style={{ color: 'var(--text-muted)', textDecoration: 'none', fontWeight: 700, fontSize: '0.875rem' }}>
+            Sign In
           </Link>
-          <div className="flex gap-8 items-center">
-            <div className="hidden md:flex gap-6">
-              <a href="#features" className="text-muted hover:text-primary transition font-semibold text-sm uppercase tracking-wider">Features</a>
-              <a href="#about" className="text-muted hover:text-primary transition font-semibold text-sm uppercase tracking-wider">Intelligence</a>
-            </div>
-            <Link to="/login" className="btn-primary" style={{ padding: '0.75rem 1.75rem', textDecoration: 'none', borderRadius: '12px', fontWeight: 700, boxShadow: '0 10px 15px -3px rgba(99, 102, 241, 0.3)' }}>
-              Join Now
-            </Link>
-          </div>
+          <Link to="/login" className="btn-primary" style={{ textDecoration: 'none', fontSize: '0.875rem', padding: '0.5rem 1.25rem' }}>
+            Sign Up →
+          </Link>
         </div>
       </nav>
 
-      {/* BirdiePay Hero Style */}
-      <section className="px-8 pt-48 pb-24 flex flex-col items-center justify-center text-center relative overflow-hidden">
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-50/50 rounded-full blur-[120px] -z-10" />
-        
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 text-indigo-600 text-sm font-bold mb-8 border border-indigo-100">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+      {/* ── HERO ── */}
+      <section style={{ maxWidth: '800px', margin: '0 auto', padding: '6rem 2rem 3rem', textAlign: 'center', position: 'relative' }}>
+
+        {/* Hand-drawn underline badge */}
+        <div style={{ display: 'inline-block', marginBottom: '2rem', position: 'relative' }}>
+          <span style={{
+            fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1rem', fontWeight: 700,
+            backgroundColor: 'var(--yellow)', padding: '0.3rem 1rem',
+            border: '2px solid var(--text-main)', borderRadius: '4px',
+            boxShadow: '3px 3px 0px var(--text-main)', color: 'var(--text-main)', letterSpacing: '0.05em',
+          }}>
+            ✦ Career Intelligence Platform ✦
           </span>
-          Next-Gen Career Intelligence
         </div>
 
-        <h1 className="text-7xl font-bold mb-8 max-w-5xl tracking-tight leading-[1.1] text-main">
-          Architect Your Future with <br/>
-          <span className="text-gradient">Precision Intelligence</span>
+        <h1 style={{
+          fontFamily: "'Space Grotesk', system-ui, sans-serif",
+          fontSize: 'clamp(3rem, 9vw, 6rem)',
+          fontWeight: 700,
+          lineHeight: 1.05,
+          letterSpacing: '-0.01em',
+          color: 'var(--text-main)',
+          marginBottom: '1rem',
+        }}>
+          Graph Your Skills.{' '}
+          <span style={{
+            position: 'relative', display: 'inline-block',
+            background: 'linear-gradient(90deg, #2563eb, #7c3aed)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          }}>
+            Get Answers.
+          </span>
         </h1>
-        
-        <p className="text-xl text-muted mb-12 max-w-2xl leading-relaxed font-medium">
-          The high-performance platform for engineers to map technical trajectories, visualize skill gaps, and accelerate professional growth.
+
+        {/* SVG hand-drawn underline */}
+        <svg width="320" height="12" viewBox="0 0 320 12" style={{ display: 'block', margin: '-0.5rem auto 1.5rem' }}>
+          <path d="M4 8 Q80 2, 160 8 Q240 14, 316 6" stroke="#2563eb" strokeWidth="3" fill="none" strokeLinecap="round" style={{ filter: 'url(#squiggle)' }}/>
+        </svg>
+
+        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', marginBottom: '2.5rem', lineHeight: 1.7, maxWidth: '560px', margin: '0 auto 2.5rem', fontWeight: 500 }}>
+          Map your engineering skills, identify career gaps, and get grounded roadmaps with citations — straight from verified industry data. No guessing, no hallucinations.
         </p>
-        
-        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <Link to="/login" className="btn-primary" style={{ padding: '1.25rem 3rem', fontSize: '1.1rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', borderRadius: '14px', fontWeight: 800 }}>
-            Launch Your Graph <ChevronRight size={22} />
+
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/login" className="btn-yellow" style={{ textDecoration: 'none', padding: '0.85rem 2.5rem', fontSize: '1rem', fontWeight: 700, border: '2px solid var(--text-main)', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', boxShadow: '4px 4px 0px var(--text-main)' }}>
+            Get Started <ArrowRight size={18} />
           </Link>
-          <a href="#features" className="flex items-center gap-3 px-8 py-4 font-bold text-main border rounded-xl hover:bg-white transition shadow-sm bg-gray-50/50">
-            Explore Capabilities
+          <a href="#features" style={{ padding: '0.85rem 2rem', fontSize: '1rem', fontWeight: 700, border: '2px solid var(--text-main)', borderRadius: '4px', color: 'var(--text-main)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', boxShadow: '3px 3px 0px var(--text-main)' }}>
+            See How It Works
           </a>
         </div>
+      </section>
 
-        {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 w-full max-w-6xl">
-          <div className="card m-0 p-10 flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-6 font-bold text-2xl border border-indigo-100">
-              <Users size={32} />
-            </div>
-            <h3 className="font-bold text-2xl mb-3">Community First</h3>
-            <p className="text-muted leading-relaxed">Join over 10,000+ engineers building the future of software development.</p>
+      {/* ── TAPE MARQUEE ── */}
+      <div style={{ overflow: 'hidden', borderTop: '2px solid var(--text-main)', borderBottom: '2px solid var(--text-main)', backgroundColor: 'var(--yellow)', padding: '0.6rem 0', margin: '3rem 0' }}>
+        <div style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)', whiteSpace: 'nowrap', display: 'flex', gap: '3rem', animation: 'marquee 20s linear infinite' }}>
+          {['✦ 500+ Tech Stacks', '✦ AI Career Paths', '✦ Skill Gap Analysis', '✦ Docs + Courses', '✦ Job Market Data', '✦ Real-Time Tracking', '✦ 500+ Tech Stacks', '✦ AI Career Paths', '✦ Skill Gap Analysis', '✦ Docs + Courses', '✦ Job Market Data', '✦ Real-Time Tracking'].map((t, i) => (
+            <span key={i}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── FEATURE BOARD (Sticky Notes) ── */}
+      <section id="features" style={{ maxWidth: '1100px', margin: '0 auto', padding: '2rem 2rem 5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
+          <div className="tape" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.4rem', fontWeight: 700, transform: 'rotate(-1deg)' }}>
+            The Feature Board.
           </div>
-          
-          <div className="card m-0 p-10 flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 mb-6 font-bold text-2xl border border-purple-100">
-              <Code size={32} />
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          {features.map((f, i) => (
+            <div
+              key={i}
+              className="card"
+              style={{
+                margin: 0, padding: '1.75rem',
+                backgroundColor: stickyColors[i % stickyColors.length],
+                transform: `rotate(${i % 2 === 0 ? '-0.8' : '0.8'}deg)`,
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.transform = 'rotate(0deg) scale(1.02)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = `rotate(${i % 2 === 0 ? '-0.8' : '0.8'}deg)`)}
+            >
+              {/* Tape on top */}
+              <div style={{ width: '40px', height: '18px', backgroundColor: 'rgba(253,224,71,0.7)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '2px', margin: '-2.5rem auto 1rem', position: 'relative' }} />
+              <div style={{ color: 'var(--text-main)', marginBottom: '0.75rem' }}>{f.icon}</div>
+              <h3 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>{f.title}</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{f.desc}</p>
             </div>
-            <h3 className="font-bold text-2xl mb-3">Universal Schema</h3>
-            <p className="text-muted leading-relaxed">Standardized skill mapping across 500+ technologies and methodologies.</p>
-          </div>
-          
-          <div className="card m-0 p-10 flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 mb-6 font-bold text-2xl border border-green-100">
-              <Database size={32} />
-            </div>
-            <h3 className="font-bold text-2xl mb-3">Predictive Insights</h3>
-            <p className="text-muted leading-relaxed">Leverage market data to identify which skills will be in highest demand tomorrow.</p>
+          ))}
+        </div>
+      </section>
+
+      {/* ── FULL FEATURES SECTION ── */}
+      <section style={{ borderTop: '2px solid var(--text-main)', backgroundColor: 'var(--bg-sidebar)', padding: '4rem 2rem' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '2.5rem', fontWeight: 700, marginBottom: '3rem' }}>
+            Everything You Need to <span style={{ background: 'var(--yellow)', padding: '0 0.3rem' }}>Graph Smarter</span>
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.5rem', textAlign: 'left' }}>
+            {features.map((f, i) => (
+              <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', padding: '1.25rem', border: '2px solid var(--text-main)', borderRadius: '4px', backgroundColor: 'var(--card-bg)', boxShadow: '3px 3px 0px var(--text-main)' }}>
+                <div style={{ color: 'var(--primary)', flexShrink: 0, marginTop: '2px' }}>{f.icon}</div>
+                <div>
+                  <h4 style={{ fontWeight: 700, marginBottom: '0.3rem', fontSize: '0.95rem' }}>{f.title}</h4>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: 1.6 }}>{f.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Intelligence Section */}
-      <section id="about" className="px-8 py-32 bg-white border-t border-b overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-50/30 rounded-full blur-[100px] -z-10" />
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
-          <div className="flex-1">
-            <div className="w-12 h-1 bg-indigo-600 mb-8" />
-            <h2 className="text-5xl font-bold mb-8 tracking-tight leading-tight">Data-Driven Career <br/>Optimization</h2>
-            <p className="text-xl text-muted leading-relaxed mb-10 font-medium">
-              We analyze millions of professional data points to provide you with the most accurate career roadmap possible. No more guessing—only data.
-            </p>
-            <div className="grid grid-cols-2 gap-8">
-              <div>
-                <div className="text-4xl font-bold text-indigo-600 mb-2">94%</div>
-                <div className="text-sm font-bold uppercase tracking-widest text-muted">Accuracy</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-indigo-600 mb-2">12k+</div>
-                <div className="text-sm font-bold uppercase tracking-widest text-muted">Roadmaps</div>
-              </div>
-            </div>
+      {/* ── HOW IT WORKS ── */}
+      <section style={{ borderTop: '2px solid var(--text-main)', padding: '4rem 2rem' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <div className="tape" style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.4rem', fontWeight: 700, marginBottom: '2.5rem', display: 'inline-block' }}>
+            How It Works*
           </div>
-          <div className="flex-1 w-full">
-             <div className="card m-0 p-8 glass-effect border-2 border-indigo-100/50 shadow-2xl skew-y-1">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">JD</div>
-                  <div>
-                    <div className="font-bold">Senior Engineer Path</div>
-                    <div className="text-xs text-muted">Intelligence Verified</div>
-                  </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', position: 'relative' }}>
+            {/* Vertical line */}
+            <div style={{ position: 'absolute', left: '19px', top: '10px', bottom: '10px', width: '2px', backgroundColor: 'var(--text-main)', zIndex: 0 }} />
+            {howItWorks.map((step, i) => (
+              <div key={i} style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
+                <div style={{
+                  width: '40px', height: '40px', borderRadius: '4px',
+                  backgroundColor: i === 0 ? 'var(--yellow)' : 'var(--card-bg)',
+                  border: '2px solid var(--text-main)',
+                  boxShadow: '2px 2px 0px var(--text-main)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 700, fontSize: '1.2rem',
+                  flexShrink: 0,
+                }}>
+                  {i + 1}
                 </div>
-                <div className="space-y-4">
-                  <div className="h-4 bg-indigo-100 rounded-full w-3/4" />
-                  <div className="h-4 bg-indigo-50 rounded-full w-1/2" />
-                  <div className="h-4 bg-indigo-100 rounded-full w-2/3" />
+                <div style={{ paddingTop: '0.5rem' }}>
+                  <h4 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.3rem' }}>{step.title}</h4>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: 1.6 }}>{step.desc}</p>
                 </div>
-             </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <footer className="py-20 border-t text-center bg-gray-50/50">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex justify-between items-center flex-col md:row gap-10">
-            <Link to="/" className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
-              <Award size={32} /> SkillGraph
-            </Link>
-            <p className="text-muted font-medium">© 2024 SkillGraph. Engineering the future of technical talent.</p>
-            <div className="flex gap-6">
-              <Link to="/login" className="font-bold text-sm text-main uppercase tracking-widest">Get Started</Link>
-            </div>
-          </div>
+      {/* ── CTA ── */}
+      <section style={{ borderTop: '2px solid var(--text-main)', padding: '5rem 2rem', textAlign: 'center', backgroundColor: 'var(--bg-sidebar)' }}>
+        <div style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '1rem' }}>
+          ⬇ Ready to ace your next promotion? 🎯
         </div>
+        <h2 style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
+          Stop drowning in blind career advice.
+        </h2>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '1rem' }}>
+          Let SkillGraph find the gaps — with proof.
+        </p>
+        <Link to="/login" className="btn-yellow" style={{ textDecoration: 'none', padding: '1rem 3rem', fontSize: '1.1rem', fontWeight: 700, border: '2px solid var(--text-main)', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', boxShadow: '5px 5px 0px var(--text-main)' }}>
+          Start Mapping Smarter →
+        </Link>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer style={{ borderTop: '2px solid var(--text-main)', padding: '1.5rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', backgroundColor: 'var(--bg-paper)' }}>
+        <span style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: 700, fontSize: '1rem', color: 'var(--text-main)' }}>SkillGraph © 2026</span>
+        <span>Made with 📊 and a lot of ☕ for engineers who want to grow.</span>
       </footer>
+
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 }
