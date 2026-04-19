@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [allAvailableSkills, setAllAvailableSkills] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   
   const [newSkillId, setNewSkillId] = useState('');
   const [newSkillLevel, setNewSkillLevel] = useState(1);
@@ -67,8 +68,6 @@ export default function Dashboard() {
     acc[skill.category] = (acc[skill.category] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
-
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   return (
     <div className="container">
