@@ -70,7 +70,10 @@ function App() {
               <button 
                 onClick={logout} 
                 className="flex items-center gap-3 p-3 rounded-lg w-full transition bg-white"
-              style={{ color: 'var(--danger)', border: '1px solid var(--danger-bg)', cursor: 'pointer' }}
+                style={{ color: 'var(--danger)', border: '1px solid var(--danger-bg)', cursor: 'pointer' }}
+              >
+                <LogOut size={20} /> Logout
+              </button>
             </div>
           </aside>
         )}
