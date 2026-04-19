@@ -28,7 +28,7 @@ function App() {
     <Router>
       <div className="w-full flex">
         {isAuthenticated && (
-          <aside className="fixed left-0 top-0 bottom-0 flex flex-col justify-between py-8 px-6" style={{ width: '260px', backgroundColor: 'rgba(15, 23, 42, 0.95)', borderRight: '1px solid var(--card-border)', backdropFilter: 'blur(20px)', zIndex: 50 }}>
+          <aside className="flex flex-col justify-between py-8 px-6" style={{ position: 'fixed', left: 0, top: 0, bottom: 0, width: '260px', backgroundColor: 'rgba(15, 23, 42, 0.95)', borderRight: '1px solid var(--card-border)', backdropFilter: 'blur(20px)', zIndex: 50 }}>
             <div>
               <Link to="/" className="text-2xl font-bold flex items-center gap-3 mb-12" style={{ color: 'var(--primary)' }}>
                 <Award size={28} /> <span className="text-white">SkillGraph</span>

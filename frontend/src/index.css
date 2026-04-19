@@ -185,15 +185,22 @@ nav {
 
 /* Utilities */
 .flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-1 { flex: 1 1 0%; }
+.flex-wrap { flex-wrap: wrap; }
 .justify-between { justify-content: space-between; }
 .justify-center { justify-content: center; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
 .items-center { align-items: center; }
 .items-start { align-items: flex-start; }
+.items-stretch { align-items: stretch; }
 .gap-1 { gap: 0.25rem; }
 .gap-2 { gap: 0.5rem; }
 .gap-3 { gap: 0.75rem; }
 .gap-4 { gap: 1rem; }
 .gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
 .grid { display: grid; }
 .grid-cols-2 { grid-template-columns: repeat(even, minmax(0, 1fr)); }
 @media (min-width: 768px) {
