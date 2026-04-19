@@ -55,17 +55,39 @@ export default function Dashboard() {
 
   return (
     <div className="container">
-      <div className="flex justify-between items-center mb-8 mt-4">
+      <div className="flex justify-between items-center mb-10 mt-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">My Skills</h1>
-          <p className="text-gray">Track and manage your technical competencies</p>
+          <h1 className="text-4xl font-bold mb-3">Skill Dashboard</h1>
+          <p className="text-gray text-lg">Track your technical competencies dynamically</p>
         </div>
         <button 
           onClick={() => setShowAddModal(true)}
           className="btn-primary"
+          style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}
         >
-          <Plus size={20} /> Update Skill
+          <Plus size={24} /> Update Skill
         </button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-6 mb-10">
+        <div className="card m-0 flex items-center gap-4" style={{ padding: '2rem', background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)', borderColor: 'rgba(139, 92, 246, 0.3)' }}>
+            <div style={{ backgroundColor: 'var(--primary)', padding: '1rem', borderRadius: '1rem', color: 'white' }}>
+              <TrendingUp size={32} />
+            </div>
+            <div>
+              <p className="text-gray text-sm font-bold tracking-wider mb-1">TOTAL SKILLS ACQUIRED</p>
+              <h2 className="text-4xl font-bold">{skills.length}</h2>
+            </div>
+        </div>
+        <div className="card m-0 flex items-center gap-4" style={{ padding: '2rem', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.1) 100%)', borderColor: 'rgba(52, 211, 153, 0.3)' }}>
+            <div style={{ backgroundColor: '#10b981', padding: '1rem', borderRadius: '1rem', color: 'white' }}>
+              <Edit2 size={32} />
+            </div>
+            <div>
+              <p className="text-gray text-sm font-bold tracking-wider mb-1">AVERAGE PROFICIENCY</p>
+              <h2 className="text-4xl font-bold">{skills.length > 0 ? (skills.reduce((acc, curr) => acc + curr.level, 0) / skills.length).toFixed(1) : '0'}<span className="text-xl text-gray"> / 10</span></h2>
+            </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-6">
