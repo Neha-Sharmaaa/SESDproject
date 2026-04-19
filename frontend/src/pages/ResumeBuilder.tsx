@@ -33,7 +33,7 @@ export default function ResumeBuilder() {
   ]);
 
   const [education, setEducation] = useState([
-    { id: 1, school: 'State University', degree: 'B.S. Computer Science', duration: '2016 - 2020', desc: 'GPA: 3.8 | Dean\\'s List' }
+    { id: 1, school: 'State University', degree: 'B.S. Computer Science', duration: '2016 - 2020', desc: "GPA: 3.8 | Dean's List" }
   ]);
 
   const [achievements, setAchievements] = useState([
