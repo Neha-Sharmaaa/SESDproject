@@ -33,26 +33,26 @@ export default function Recommendations() {
 
       <div className="space-y-6">
         {recommendations.map((rec) => (
-          <div key={rec.id} className="card">
+          <div key={rec.id} className="card m-0" style={{ padding: '2rem', marginBottom: '1.5rem' }}>
             <div className="flex justify-between items-start">
               <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-xl font-bold">{rec.name}</h3>
-                  <div className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-bold">
+                <div className="flex items-center gap-3 mb-4">
+                  <h3 className="text-2xl font-bold">{rec.name}</h3>
+                  <div className="text-xs px-3 py-1 rounded-full font-bold" style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
                     {rec.matchPercentage}% Match
                   </div>
                 </div>
-                <p className="text-gray mb-4">{rec.description}</p>
+                <p className="text-gray mb-6">{rec.description}</p>
                 
                 {rec.skillGaps.length > 0 && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold flex items-center gap-1 text-orange-600 mb-2">
-                      <AlertCircle size={14} /> Skill Gaps to Address:
+                    <h4 className="text-sm font-semibold flex items-center gap-2 mb-3" style={{ color: '#fbbf24' }}>
+                      <AlertCircle size={16} /> Skill Gaps to Address:
                     </h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                       {rec.skillGaps.map((gap: any, i: number) => (
-                        <span key={i} className="text-xs bg-gray-100 border border-gray-200 px-2 py-1 rounded">
-                          {gap.skill} (Need {gap.required}, Have {gap.current})
+                        <span key={i} className="text-xs px-3 py-1.5 rounded" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)', color: 'var(--text-main)' }}>
+                          {gap.skill} <span style={{ color: 'var(--text-muted)' }}>(Need {gap.required}, Have {gap.current})</span>
                         </span>
                       ))}
                     </div>
@@ -61,7 +61,8 @@ export default function Recommendations() {
               </div>
               <Link 
                 to={`/roadmap/${rec.id}`}
-                className="bg-indigo-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-indigo-700 transition"
+                className="btn-primary"
+                style={{ padding: '0.75rem 1.25rem', textDecoration: 'none' }}
               >
                 View Roadmap <ChevronRight size={18} />
               </Link>
