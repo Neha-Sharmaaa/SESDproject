@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Recommendations from './pages/Recommendations';
 import Roadmap from './pages/Roadmap';
+import Home from './pages/Home';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -26,18 +27,18 @@ function App() {
 
   return (
     <Router>
-      <div className="w-full flex">
+      <div className="w-full flex" style={{ minHeight: '100vh' }}>
         {isAuthenticated && (
           <aside className="flex flex-col justify-between py-8 px-6" style={{ position: 'fixed', left: 0, top: 0, bottom: 0, width: '260px', backgroundColor: 'rgba(15, 23, 42, 0.95)', borderRight: '1px solid var(--card-border)', backdropFilter: 'blur(20px)', zIndex: 50 }}>
             <div>
-              <Link to="/" className="text-2xl font-bold flex items-center gap-3 mb-12" style={{ color: 'var(--primary)' }}>
+              <Link to="/dashboard" className="text-2xl font-bold flex items-center gap-3 mb-12" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
                 <Award size={28} /> <span className="text-white">SkillGraph</span>
               </Link>
               <div className="flex flex-col gap-4">
-                <Link to="/" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-main)' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}>
+                <Link to="/dashboard" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}>
                   <Layout size={20} className="text-indigo-500" /> My Dashboard
                 </Link>
-                <Link to="/recommendations" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-main)' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}>
+                <Link to="/recommendations" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}>
                   <Target size={20} className="text-indigo-500" /> Career Paths
                 </Link>
               </div>
@@ -46,7 +47,7 @@ function App() {
             <button 
               onClick={logout} 
               className="flex items-center gap-3 p-3 rounded-lg w-full transition"
-              style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.2)' }}
+              style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.2)', cursor: 'pointer' }}
               onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
             >
@@ -56,10 +57,11 @@ function App() {
         )}
 
         <main className="flex-1" style={{ marginLeft: isAuthenticated ? '260px' : '0', display: 'flex', flexDirection: 'column' }}>
-          <div className="flex-1 p-8 animate-fade-in" style={{ maxWidth: '1440px', margin: '0 auto', width: '100%' }}>
+          <div className="flex-1 animate-fade-in" style={{ maxWidth: isAuthenticated ? '1440px' : '100%', margin: '0 auto', width: '100%', padding: isAuthenticated ? '2rem' : '0' }}>
             <Routes>
-              <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
-              <Route path="/" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+              <Route path="/" element={!isAuthenticated ? <Home /> : <Navigate to="/dashboard" />} />
+              <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />
+              <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
               <Route path="/recommendations" element={isAuthenticated ? <Recommendations /> : <Navigate to="/login" />} />
               <Route path="/roadmap/:careerId" element={isAuthenticated ? <Roadmap /> : <Navigate to="/login" />} />
             </Routes>
