@@ -29,29 +29,29 @@ function App() {
     <Router>
       <div className="w-full flex" style={{ minHeight: '100vh' }}>
         {isAuthenticated && (
-          <aside className="flex flex-col justify-between py-8 px-6" style={{ position: 'fixed', left: 0, top: 0, bottom: 0, width: '260px', backgroundColor: 'rgba(15, 23, 42, 0.95)', borderRight: '1px solid var(--card-border)', backdropFilter: 'blur(20px)', zIndex: 50 }}>
+          <aside className="flex flex-col justify-between py-8 px-6 bg-white" style={{ position: 'fixed', left: 0, top: 0, bottom: 0, width: '260px', borderRight: '1px solid #e2e8f0', zIndex: 50 }}>
             <div>
-              <Link to="/dashboard" className="text-2xl font-bold flex items-center gap-3 mb-12" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
-                <Award size={28} /> <span className="text-white">SkillGraph</span>
+              <Link to="/dashboard" className="text-2xl font-bold flex items-center gap-3 mb-10" style={{ color: 'var(--text-main)', textDecoration: 'none' }}>
+                <Award size={28} className="text-indigo-600" /> <span>SkillGraph</span>
               </Link>
-              <div className="flex flex-col gap-4">
-                <Link to="/dashboard" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}>
-                  <Layout size={20} className="text-indigo-500" /> My Dashboard
+              <div className="flex flex-col gap-2">
+                <Link to="/dashboard" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                  <Layout size={20} className="text-gray" /> My Dashboard
                 </Link>
-                <Link to="/recommendations" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'}>
-                  <Target size={20} className="text-indigo-500" /> Career Paths
+                <Link to="/recommendations" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                  <Target size={20} className="text-gray" /> Career Paths
                 </Link>
               </div>
             </div>
             
             <button 
               onClick={logout} 
-              className="flex items-center gap-3 p-3 rounded-lg w-full transition"
-              style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#fca5a5', border: '1px solid rgba(239, 68, 68, 0.2)', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)'}
-              onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'}
+              className="flex items-center gap-3 p-3 rounded-lg w-full transition bg-white"
+              style={{ color: 'var(--danger)', border: '1px solid var(--danger-bg)', cursor: 'pointer' }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--danger-bg)'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'white'}
             >
-              <LogOut size={20} /> Logout Account
+              <LogOut size={20} /> Logout
             </button>
           </aside>
         )}

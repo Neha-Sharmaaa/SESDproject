@@ -33,12 +33,12 @@ export default function Recommendations() {
 
       <div className="space-y-6">
         {recommendations.map((rec) => (
-          <div key={rec.id} className="card m-0" style={{ padding: '2rem', marginBottom: '1.5rem' }}>
+          <div key={rec.id} className="card m-0 bg-white" style={{ padding: '2rem', marginBottom: '1.5rem' }}>
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <h3 className="text-2xl font-bold">{rec.name}</h3>
-                  <div className="text-xs px-3 py-1 rounded-full font-bold" style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)', color: '#34d399', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+                  <div className="text-xs px-3 py-1 rounded-full font-bold bg-green-50" style={{ color: 'var(--success)', border: '1px solid var(--success)' }}>
                     {rec.matchPercentage}% Match
                   </div>
                 </div>
@@ -46,12 +46,12 @@ export default function Recommendations() {
                 
                 {rec.skillGaps.length > 0 && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold flex items-center gap-2 mb-3" style={{ color: '#fbbf24' }}>
+                    <h4 className="text-sm font-semibold flex items-center gap-2 mb-3 text-orange-600">
                       <AlertCircle size={16} /> Skill Gaps to Address:
                     </h4>
                     <div className="flex flex-wrap gap-2" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                       {rec.skillGaps.map((gap: any, i: number) => (
-                        <span key={i} className="text-xs px-3 py-1.5 rounded" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)', color: 'var(--text-main)' }}>
+                        <span key={i} className="text-xs px-3 py-1.5 rounded bg-gray-50 bg-gray-100" style={{ border: '1px solid var(--card-border)', color: 'var(--text-main)' }}>
                           {gap.skill} <span style={{ color: 'var(--text-muted)' }}>(Need {gap.required}, Have {gap.current})</span>
                         </span>
                       ))}

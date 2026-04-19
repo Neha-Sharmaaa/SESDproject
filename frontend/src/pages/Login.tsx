@@ -26,8 +26,8 @@ export default function Login() {
   return (
     <div className="auth-container">
       <div className="auth-wrapper">
-        <div className="card w-full" style={{ maxWidth: '420px', padding: '2.5rem', margin: 0 }}>
-          <h2 className="text-3xl font-bold mb-8 text-center" style={{ letterSpacing: '0.5px' }}>
+        <div className="card w-full shadow-md" style={{ maxWidth: '420px', padding: '2.5rem', margin: 0, backgroundColor: 'white', border: '1px solid #e2e8f0' }}>
+          <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: '#0f172a' }}>
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </h2>
           
@@ -75,8 +75,8 @@ export default function Login() {
             {isLogin ? "Don't have an account?" : "Already have an account?"}
             <button 
               type="button"
-              className="ml-2 font-bold p-0 border-none bg-transparent"
-              style={{ color: 'var(--accent)' }}
+              className="ml-2 font-semibold p-0 border-none bg-transparent"
+              style={{ color: 'var(--primary)', cursor: 'pointer' }}
               onClick={() => setIsLogin(!isLogin)}
             >
               {isLogin ? 'Sign Up' : 'Log In'}

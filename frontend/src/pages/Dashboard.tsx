@@ -57,7 +57,7 @@ export default function Dashboard() {
     <div className="container">
       <div className="flex justify-between items-center mb-10 mt-4">
         <div>
-          <h1 className="text-4xl font-bold mb-3">Skill Dashboard</h1>
+          <h1 className="text-4xl font-bold mb-3" style={{ color: 'var(--text-main)' }}>Skill Dashboard</h1>
           <p className="text-gray text-lg">Track your technical competencies dynamically</p>
         </div>
         <button 
@@ -70,33 +70,33 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-2 gap-6 mb-10">
-        <div className="card m-0 flex items-center gap-4" style={{ padding: '2rem', background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)', borderColor: 'rgba(139, 92, 246, 0.3)' }}>
+        <div className="card m-0 flex items-center gap-4 bg-white" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
             <div style={{ backgroundColor: 'var(--primary)', padding: '1rem', borderRadius: '1rem', color: 'white' }}>
               <TrendingUp size={32} />
             </div>
             <div>
               <p className="text-gray text-sm font-bold tracking-wider mb-1">TOTAL SKILLS ACQUIRED</p>
-              <h2 className="text-4xl font-bold">{skills.length}</h2>
+              <h2 className="text-4xl font-bold text-main">{skills.length}</h2>
             </div>
         </div>
-        <div className="card m-0 flex items-center gap-4" style={{ padding: '2rem', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.1) 100%)', borderColor: 'rgba(52, 211, 153, 0.3)' }}>
+        <div className="card m-0 flex items-center gap-4 bg-white" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
             <div style={{ backgroundColor: '#10b981', padding: '1rem', borderRadius: '1rem', color: 'white' }}>
               <Edit2 size={32} />
             </div>
             <div>
               <p className="text-gray text-sm font-bold tracking-wider mb-1">AVERAGE PROFICIENCY</p>
-              <h2 className="text-4xl font-bold">{skills.length > 0 ? (skills.reduce((acc, curr) => acc + curr.level, 0) / skills.length).toFixed(1) : '0'}<span className="text-xl text-gray"> / 10</span></h2>
+              <h2 className="text-4xl font-bold text-main">{skills.length > 0 ? (skills.reduce((acc, curr) => acc + curr.level, 0) / skills.length).toFixed(1) : '0'}<span className="text-xl text-gray"> / 10</span></h2>
             </div>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-6">
         {skills.map((skill) => (
-          <div key={skill.id} className="card m-0" style={{ padding: '2rem' }}>
+          <div key={skill.id} className="card m-0 bg-white" style={{ padding: '2rem' }}>
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
-                <span className="text-xs font-bold" style={{ backgroundColor: 'rgba(192, 132, 252, 0.15)', color: 'var(--accent)', padding: '0.25rem 0.75rem', borderRadius: '9999px' }}>
+                <h3 className="text-xl font-bold mb-2 text-main">{skill.name}</h3>
+                <span className="text-xs font-bold bg-green-50" style={{ color: 'var(--success)', padding: '0.25rem 0.75rem', borderRadius: '9999px', border: '1px solid var(--success)' }}>
                   {skill.category}
                 </span>
               </div>
@@ -104,29 +104,28 @@ export default function Dashboard() {
                 <TrendingUp size={18} /> {skill.level}/10
               </div>
             </div>
-            <div className="w-full rounded-full h-3" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+            <div className="w-full rounded-full h-3 bg-gray-100">
               <div 
                 className="h-3 rounded-full" 
                 style={{ 
                   width: `${skill.level * 10}%`,
-                  background: 'linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%)',
-                  boxShadow: '0 0 10px rgba(139, 92, 246, 0.5)'
+                  backgroundColor: 'var(--primary)',
                 }}
               ></div>
             </div>
           </div>
         ))}
         {skills.length === 0 && (
-          <div className="col-span-2 text-center py-12 rounded-lg border-2 border-dashed" style={{ borderColor: 'var(--card-border)', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+          <div className="col-span-2 text-center py-12 rounded-lg border-2 border-dashed bg-gray-50 border">
             <p className="text-gray">No skills added yet. Start by adding your first skill!</p>
           </div>
         )}
       </div>
 
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10" style={{ backdropFilter: 'blur(4px)' }}>
-          <div className="card w-full max-w-md m-0 flex flex-col">
-            <h2 className="text-2xl font-bold mb-6">Update Skill Level</h2>
+        <div className="fixed inset-0 flex justify-center items-center z-10" style={{ backgroundColor: 'rgba(15, 23, 42, 0.5)', backdropFilter: 'blur(4px)' }}>
+          <div className="card w-full max-w-md m-0 flex flex-col bg-white">
+            <h2 className="text-2xl font-bold mb-6 text-main">Update Skill Level</h2>
             <form onSubmit={handleUpdateSkill}>
               <div className="mb-6">
                 <label>Select Skill</label>
@@ -135,9 +134,9 @@ export default function Dashboard() {
                   onChange={(e) => setNewSkillId(e.target.value)}
                   required
                 >
-                  <option value="" style={{ color: 'black' }}>Select a skill</option>
+                  <option value="">Select a skill</option>
                   {allAvailableSkills.map(s => (
-                    <option key={s.id} value={s.id} style={{ color: 'black' }}>{s.name} ({s.category})</option>
+                    <option key={s.id} value={s.id}>{s.name} ({s.category})</option>
                   ))}
                 </select>
               </div>
