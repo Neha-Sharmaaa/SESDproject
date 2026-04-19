@@ -47,13 +47,13 @@ function App() {
                 <Award size={28} className="text-indigo-600" /> <span>SkillGraph</span>
               </Link>
               <div className="flex flex-col gap-2">
-                <Link to="/dashboard" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                <Link to="/dashboard" className="nav-link">
                   <Layout size={20} className="text-gray" /> My Dashboard
                 </Link>
-                <Link to="/recommendations" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                <Link to="/recommendations" className="nav-link">
                   <Target size={20} className="text-gray" /> Career Paths
                 </Link>
-                <Link to="/resume" className="flex items-center gap-3 p-3 rounded-lg transition" style={{ color: 'var(--text-main)', textDecoration: 'none' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                <Link to="/resume" className="nav-link">
                   <FileText size={20} className="text-gray" /> Resume Builder
                 </Link>
               </div>
