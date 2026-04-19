@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, TrendingUp } from 'lucide-react';
+import { Plus, Edit2, TrendingUp, Download, Award, BarChart2 } from 'lucide-react';
 import api from '../utils/api';
 
 interface Skill {
@@ -53,6 +53,21 @@ export default function Dashboard() {
 
   if (loading) return <div className="container">Loading...</div>;
 
+  const avgProficiency = skills.length > 0 ? (skills.reduce((acc, curr) => acc + curr.level, 0) / skills.length) : 0;
+  
+  const getRank = (avg: number) => {
+    if (skills.length === 0) return 'Newcomer';
+    if (avg < 4) return 'Junior Learner';
+    if (avg < 7) return 'Skilled Professional';
+    if (avg < 9) return 'Senior Expert';
+    return 'Master Architect';
+  };
+
+  const categoryCounts = skills.reduce((acc, skill) => {
+    acc[skill.category] = (acc[skill.category] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
   return (
     <div className="container">
       <div className="flex justify-between items-center mb-10 mt-4 animate-slide-in">
@@ -60,16 +75,25 @@ export default function Dashboard() {
           <h1 className="text-4xl font-bold mb-3" style={{ color: 'var(--text-main)' }}>Skill Dashboard</h1>
           <p className="text-gray text-lg">Track your technical competencies dynamically</p>
         </div>
-        <button 
-          onClick={() => setShowAddModal(true)}
-          className="btn-primary"
-          style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}
-        >
-          <Plus size={24} /> Update Skill
-        </button>
+        <div className="flex gap-4">
+          <button 
+            onClick={() => window.print()}
+            className="group"
+            style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem', backgroundColor: 'var(--card-bg)', color: 'var(--text-main)', border: '1px solid var(--card-border)', transition: 'all 0.2s' }}
+          >
+            <Download size={20} className="group-hover:text-primary transition" /> Export CSV
+          </button>
+          <button 
+            onClick={() => setShowAddModal(true)}
+            className="btn-primary"
+            style={{ padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}
+          >
+            <Plus size={24} /> Update Skill
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-1 group hover:border-indigo-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
             <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: 'var(--primary)', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
               <TrendingUp size={36} />
@@ -80,15 +104,38 @@ export default function Dashboard() {
             </div>
         </div>
         <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-2 group hover:border-green-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
-            <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: '#10b981', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
+            <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: 'var(--success)', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
               <Edit2 size={36} />
             </div>
             <div>
               <p className="text-gray text-sm font-bold tracking-wider mb-1">AVERAGE PROFICIENCY</p>
-              <h2 className="text-4xl font-bold text-main">{skills.length > 0 ? (skills.reduce((acc, curr) => acc + curr.level, 0) / skills.length).toFixed(1) : '0'}<span className="text-xl text-gray"> / 10</span></h2>
+              <h2 className="text-4xl font-bold text-main">{avgProficiency.toFixed(1)}<span className="text-xl text-gray"> / 10</span></h2>
+            </div>
+        </div>
+        <div className="card m-0 flex items-center gap-4 bg-white animate-slide-in stagger-3 group hover:border-orange-200" style={{ padding: '2rem', border: '1px solid var(--card-border)' }}>
+            <div className="group-hover:scale-110 transition-transform duration-300 shadow-md" style={{ backgroundColor: '#f97316', padding: '1.25rem', borderRadius: '1rem', color: 'white' }}>
+              <Award size={36} />
+            </div>
+            <div>
+              <p className="text-gray text-sm font-bold tracking-wider mb-1">YOUR EXPERIENCE RANK</p>
+              <h2 className="text-3xl font-bold text-main mt-1 leading-tight text-transparent bg-clip-text" style={{ background: 'linear-gradient(135deg, #f97316 0%, #f59e0b 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{getRank(avgProficiency)}</h2>
             </div>
         </div>
       </div>
+
+      {skills.length > 0 && (
+        <div className="mb-10 animate-slide-in stagger-3">
+          <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><BarChart2 className="text-indigo-600"/> Skill Distribution by Category</h3>
+          <div className="flex gap-3 flex-wrap">
+            {Object.entries(categoryCounts).map(([cat, count]) => (
+              <div key={cat} className="card m-0 flex items-center gap-3 px-6 py-3 bg-white" style={{ borderRadius: '999px', padding: '0.75rem 1.5rem' }}>
+                <span className="font-semibold">{cat}</span>
+                <span className="font-bold text-white flex items-center justify-center" style={{ backgroundColor: 'var(--primary)', width: '28px', height: '28px', borderRadius: '50%' }}>{count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-6">
         {skills.map((skill, index) => (
