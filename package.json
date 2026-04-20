@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build:frontend": "cd frontend && npm install --include=dev && npm run build",
-    "build:backend": "cd backend && npm install --include=dev && npm install sqlite3 --build-from-source && npm run build",
+    "build:backend": "cd backend && npm install --include=dev --build-from-source sqlite3 && npm run build",
     "build": "npm run build:frontend && npm run build:backend",
     "start": "cd backend && npm start"
   }
