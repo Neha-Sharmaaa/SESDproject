@@ -1,33 +1,57 @@
-import { BaseRepository } from './BaseRepository';
-import { Skill, UserSkill } from '../models/types';
+import mongoose from 'mongoose';
+import { SkillModel, ISkill } from '../models/Skill';
+import { UserModel } from '../models/User';
 
-export class SkillRepository extends BaseRepository<Skill> {
-    constructor() {
-        super('skills');
-    }
+export interface UserSkillItem {
+  _id: string;
+  name: string;
+  category: string;
+  level: number;
+}
 
-    async findUserSkills(userId: number): Promise<(Skill & { level: number })[]> {
-        const d = await this.db();
-        return await d.all(`
-            SELECT s.*, us.level 
-            FROM skills s 
-            JOIN user_skills us ON s.id = us.skill_id 
-            WHERE us.user_id = ?
-        `, [userId]);
-    }
+export class SkillRepository {
+  async findAll(): Promise<ISkill[]> {
+    return SkillModel.find().exec();
+  }
 
-    async addUserSkill(userId: number, skillId: number, level: number): Promise<void> {
-        const d = await this.db();
-        const existing = await d.get(`SELECT * FROM user_skills WHERE user_id = ? AND skill_id = ?`, [userId, skillId]);
-        if (existing) {
-            await d.run(`UPDATE user_skills SET level = ? WHERE user_id = ? AND skill_id = ?`, [level, userId, skillId]);
-        } else {
-            await d.run(`INSERT INTO user_skills (user_id, skill_id, level) VALUES (?, ?, ?)`, [userId, skillId, level]);
-        }
-    }
+  async findById(id: string): Promise<ISkill | null> {
+    return SkillModel.findById(id).exec();
+  }
 
-    async removeUserSkill(userId: number, skillId: number): Promise<void> {
-        const d = await this.db();
-        await d.run(`DELETE FROM user_skills WHERE user_id = ? AND skill_id = ?`, [userId, skillId]);
+  async findUserSkills(userId: string): Promise<UserSkillItem[]> {
+    const user = await UserModel.findById(userId)
+      .populate<{ skills: Array<{ skillId: ISkill; level: number }> }>('skills.skillId')
+      .exec();
+
+    if (!user) return [];
+
+    return user.skills.map((s) => {
+      const skill = s.skillId as ISkill;
+      return {
+        _id: skill._id.toString(),
+        name: skill.name,
+        category: skill.category,
+        level: s.level,
+      };
+    });
+  }
+
+  async addUserSkill(userId: string, skillId: string, level: number): Promise<void> {
+    const user = await UserModel.findById(userId).exec();
+    if (!user) throw new Error('User not found');
+
+    const existing = user.skills.find((s) => s.skillId.toString() === skillId);
+    if (existing) {
+      existing.level = level;
+    } else {
+      user.skills.push({ skillId: new mongoose.Types.ObjectId(skillId), level });
     }
+    await user.save();
+  }
+
+  async removeUserSkill(userId: string, skillId: string): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, {
+      $pull: { skills: { skillId: new mongoose.Types.ObjectId(skillId) } },
+    }).exec();
+  }
 }

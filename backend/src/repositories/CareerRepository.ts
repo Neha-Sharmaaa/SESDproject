@@ -1,23 +1,34 @@
-import { BaseRepository } from './BaseRepository';
-import { CareerRole, CareerRequiredSkill } from '../models/types';
+import { CareerRoleModel, ICareerRole } from '../models/CareerRole';
+import { ISkill } from '../models/Skill';
 
-export class CareerRepository extends BaseRepository<CareerRole> {
-    constructor() {
-        super('career_roles');
-    }
+export interface CareerSkillItem {
+  skillId: string;
+  name: string;
+  requiredLevel: number;
+}
 
-    async getRequiredSkills(careerId: number): Promise<(CareerRequiredSkill & { name: string })[]> {
-        const d = await this.db();
-        return await d.all(`
-            SELECT crs.*, s.name 
-            FROM career_required_skills crs 
-            JOIN skills s ON crs.skill_id = s.id 
-            WHERE crs.career_id = ?
-        `, [careerId]);
-    }
+export class CareerRepository {
+  async findAll(): Promise<ICareerRole[]> {
+    return CareerRoleModel.find().exec();
+  }
 
-    async getRoadmap(careerId: number): Promise<any | undefined> {
-        const d = await this.db();
-        return await d.get(`SELECT * FROM roadmaps WHERE career_id = ?`, [careerId]);
-    }
+  async findById(id: string): Promise<ICareerRole | null> {
+    return CareerRoleModel.findById(id).exec();
+  }
+
+  async getRequiredSkills(careerId: string): Promise<CareerSkillItem[]> {
+    const career = await CareerRoleModel.findById(careerId)
+      .populate<{
+        requiredSkills: Array<{ skillId: ISkill; requiredLevel: number }>;
+      }>('requiredSkills.skillId')
+      .exec();
+
+    if (!career) return [];
+
+    return career.requiredSkills.map((rs) => ({
+      skillId: (rs.skillId as ISkill)._id.toString(),
+      name: (rs.skillId as ISkill).name,
+      requiredLevel: rs.requiredLevel,
+    }));
+  }
 }

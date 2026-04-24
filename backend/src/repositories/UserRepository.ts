@@ -1,22 +1,22 @@
-import { BaseRepository } from './BaseRepository';
-import { User } from '../models/types';
+import { UserModel, IUser } from '../models/User';
+import mongoose from 'mongoose';
 
-export class UserRepository extends BaseRepository<User> {
-    constructor() {
-        super('users');
-    }
+export class UserRepository {
+  async findById(id: string): Promise<IUser | null> {
+    return UserModel.findById(id).exec();
+  }
 
-    async findByEmail(email: string): Promise<User | undefined> {
-        const d = await this.db();
-        return await d.get(`SELECT * FROM users WHERE email = ?`, [email]);
-    }
+  async findByEmail(email: string): Promise<IUser | null> {
+    return UserModel.findOne({ email }).exec();
+  }
 
-    async create(user: User): Promise<number> {
-        const d = await this.db();
-        const result = await d.run(
-            `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`,
-            [user.name, user.email, user.password, user.role || 'user']
-        );
-        return result.lastID!;
-    }
+  async create(userData: {
+    name: string;
+    email: string;
+    password: string;
+    role?: string;
+  }): Promise<IUser> {
+    const user = new UserModel(userData);
+    return user.save();
+  }
 }
