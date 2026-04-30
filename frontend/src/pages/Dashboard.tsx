@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, TrendingUp, Award, BarChart2, Trash2, BookOpen, Search, ExternalLink } from 'lucide-react';
 import api from '../utils/api';
 
-interface Skill { id: number; name: string; category: string; level: number; }
+interface Skill { id: string; name: string; category: string; level: number; }
 
 const LEVEL_LABELS: Record<number, string> = { 1: 'Beginner', 2: 'Elementary', 3: 'Intermediate', 4: 'Advanced', 5: 'Expert' };
 
@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [allAvailableSkills, setAllAvailableSkills] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [newSkillId, setNewSkillId] = useState('');
   const [newSkillLevel, setNewSkillLevel] = useState(1);
 
@@ -31,13 +31,13 @@ export default function Dashboard() {
     e.preventDefault();
     if (!newSkillId) return;
     try {
-      await api.post('/skills/me', { skillId: parseInt(newSkillId), level: newSkillLevel });
+      await api.post('/skills/me', { skillId: newSkillId, level: newSkillLevel });
       setShowAddModal(false);
       fetchData();
     } catch (err) { console.error(err); }
   };
 
-  const handleDelete = async (skillId: number, e: React.MouseEvent) => {
+  const handleDelete = async (skillId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (!window.confirm('Remove this skill from your profile?')) return;
     try {

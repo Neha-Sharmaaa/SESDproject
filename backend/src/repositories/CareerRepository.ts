@@ -25,10 +25,12 @@ export class CareerRepository {
 
     if (!career) return [];
 
-    return career.requiredSkills.map((rs) => ({
-      skillId: (rs.skillId as ISkill)._id.toString(),
-      name: (rs.skillId as ISkill).name,
-      requiredLevel: rs.requiredLevel,
-    }));
+    return career.requiredSkills
+      .filter((rs) => rs.skillId !== null)
+      .map((rs) => ({
+        skillId: (rs.skillId as ISkill)._id.toString(),
+        name: (rs.skillId as ISkill).name,
+        requiredLevel: rs.requiredLevel,
+      }));
   }
 }

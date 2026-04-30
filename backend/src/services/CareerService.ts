@@ -12,7 +12,7 @@ class SimpleMatchStrategy implements RecommendationStrategy {
     if (careerSkills.length === 0) return 0;
     let totalScore = 0;
     careerSkills.forEach((cs) => {
-      const us = userSkills.find((u) => u._id === cs.skillId);
+      const us = userSkills.find((u) => u.id === cs.skillId);
       if (us) {
         const match = Math.min(us.level / cs.requiredLevel, 1);
         totalScore += match;
@@ -53,17 +53,17 @@ export class CareerService {
 
         const skillGaps = careerSkills
           .filter((cs) => {
-            const us = userSkills.find((u) => u._id === cs.skillId);
+            const us = userSkills.find((u) => u.id === cs.skillId);
             return !us || us.level < cs.requiredLevel;
           })
           .map((cs) => ({
             skill: cs.name,
             required: cs.requiredLevel,
-            current: userSkills.find((u) => u._id === cs.skillId)?.level || 0,
+            current: userSkills.find((u) => u.id === cs.skillId)?.level || 0,
           }));
 
         return {
-          _id: careerId,
+          id: careerId,
           name: career.name,
           description: career.description,
           matchPercentage: score,
@@ -83,7 +83,7 @@ export class CareerService {
     const careerSkills = await this.careerRepo.getRequiredSkills(careerId);
 
     const missingSkills = careerSkills.filter((cs) => {
-      const us = userSkills.find((u) => u._id === cs.skillId);
+      const us = userSkills.find((u) => u.id === cs.skillId);
       return !us || us.level < cs.requiredLevel;
     });
 

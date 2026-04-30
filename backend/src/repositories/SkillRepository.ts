@@ -10,8 +10,13 @@ export interface UserSkillItem {
 }
 
 export class SkillRepository {
-  async findAll(): Promise<ISkill[]> {
-    return SkillModel.find().exec();
+  async findAll(): Promise<any[]> {
+    const skills = await SkillModel.find().exec();
+    return skills.map(s => ({
+      id: s._id.toString(),
+      name: s.name,
+      category: s.category
+    }));
   }
 
   async findById(id: string): Promise<ISkill | null> {
@@ -25,15 +30,17 @@ export class SkillRepository {
 
     if (!user) return [];
 
-    return user.skills.map((s) => {
-      const skill = s.skillId as ISkill;
-      return {
-        _id: skill._id.toString(),
-        name: skill.name,
-        category: skill.category,
-        level: s.level,
-      };
-    });
+    return user.skills
+      .filter((s) => s.skillId !== null)
+      .map((s) => {
+        const skill = s.skillId as ISkill;
+        return {
+          id: skill._id.toString(),
+          name: skill.name,
+          category: skill.category,
+          level: s.level,
+        };
+      });
   }
 
   async addUserSkill(userId: string, skillId: string, level: number): Promise<void> {

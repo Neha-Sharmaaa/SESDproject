@@ -10,9 +10,10 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Allow requests from the deployed frontend (set FRONTEND_URL in env)
+const allowedOrigin = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '');
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: allowedOrigin,
     credentials: true,
   })
 );
