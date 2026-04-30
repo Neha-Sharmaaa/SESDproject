@@ -92,7 +92,7 @@ function App() {
               </button>
               <button
                 onClick={logout}
-                style={{ justifyContent: 'flex-start', boxShadow: '2px 2px 0px var(--text-main)', fontSize: '0.8rem', borderColor: '#ef4444', color: '#ef4444', boxShadow: '2px 2px 0px #ef4444' as any }}
+                style={{ justifyContent: 'flex-start', fontSize: '0.8rem', borderColor: '#ef4444', color: '#ef4444', boxShadow: '2px 2px 0px #ef4444' }}
               >
                 <LogOut size={15} /> Sign out
               </button>

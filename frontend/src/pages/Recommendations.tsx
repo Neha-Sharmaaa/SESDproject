@@ -69,13 +69,13 @@ export default function Recommendations() {
                   {/* Skill gaps */}
                   {rec.skillGaps.length > 0 && (
                     <div>
-                      <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#d97706', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '0.95rem' }}>
+                      <p style={{ fontWeight: 700, color: '#d97706', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.35rem', fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '0.95rem' }}>
                         <AlertCircle size={14} /> Skills to address:
                       </p>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                         {rec.skillGaps.map((gap: any, i: number) => (
                           <span key={i} style={{
-                            fontSize: '0.75rem', fontWeight: 700,
+                            fontWeight: 700,
                             padding: '0.2rem 0.65rem',
                             border: '2px solid var(--text-main)', borderRadius: '4px',
                             boxShadow: '1px 1px 0px var(--text-main)',
