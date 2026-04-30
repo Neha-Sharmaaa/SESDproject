@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link, NavLink } from 'react-router-dom';
-import { LayoutDashboard, Target, LogOut, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Target, LogOut } from 'lucide-react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Recommendations from './pages/Recommendations';
@@ -26,13 +26,9 @@ const SketchFilters = () => (
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
   useEffect(() => {
-    if (theme === 'dark') document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    document.documentElement.classList.remove('dark');
+  }, []);
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -83,13 +79,7 @@ function App() {
 
             {/* Bottom */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <button
-                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                style={{ justifyContent: 'flex-start', boxShadow: '2px 2px 0px var(--text-main)', fontSize: '0.8rem' }}
-              >
-                {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
-                {theme === 'light' ? 'Dark mode' : 'Light mode'}
-              </button>
+
               <button
                 onClick={logout}
                 style={{ justifyContent: 'flex-start', fontSize: '0.8rem', borderColor: '#ef4444', color: '#ef4444', boxShadow: '2px 2px 0px #ef4444' }}

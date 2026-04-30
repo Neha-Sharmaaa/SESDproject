@@ -32,25 +32,6 @@
 
   color-scheme: light;
 }
-
-.dark {
-  --bg-paper: #1a1a2e;
-  --bg-sidebar: #16213e;
-  --card-bg: #16213e;
-  --card-border: #334155;
-
-  --text-main: #f1f5f9;
-  --text-muted: #94a3b8;
-
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --primary-bg: rgba(59, 130, 246, 0.1);
-  --primary-border: rgba(59, 130, 246, 0.3);
-
-  --shadow-sketch: 3px 3px 0px #f1f5f9;
-  --shadow-sketch-hover: 5px 5px 0px #f1f5f9;
-
-  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -66,12 +47,6 @@ body {
   background-size: 40px 40px;
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
-}
-
-.dark body {
-  background-image:
-    linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
 }
 
 #root { width: 100%; min-height: 100vh; }
