@@ -90,7 +90,12 @@ function App() {
           </aside>
         )}
 
-        <main style={{ flex: 1, marginLeft: isAuthenticated ? '248px' : 0 }}>
+        <main style={{ 
+          flex: 1, 
+          marginLeft: isAuthenticated ? '248px' : 0,
+          width: '100%',
+          minWidth: 0 // Prevent flex-basis issues
+        }}>
           <Routes>
             <Route path="/" element={!isAuthenticated ? <Home /> : <Navigate to="/dashboard" />} />
             <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dashboard" />} />

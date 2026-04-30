@@ -45,15 +45,25 @@ export default function Home() {
       </nav>
 
       {/* ── HERO ── */}
-      <section style={{ maxWidth: '800px', margin: '0 auto', padding: '6rem 2rem 3rem', textAlign: 'center', position: 'relative' }}>
+      <section style={{ 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '8rem 2rem 6rem', 
+        textAlign: 'center', 
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
 
         {/* Hand-drawn underline badge */}
-        <div style={{ display: 'inline-block', marginBottom: '2rem', position: 'relative' }}>
+        <div style={{ display: 'inline-block', marginBottom: '2.5rem', position: 'relative' }}>
           <span style={{
-            fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '1rem', fontWeight: 700,
-            backgroundColor: 'var(--yellow)', padding: '0.3rem 1rem',
+            fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: '0.9rem', fontWeight: 700,
+            backgroundColor: 'var(--yellow)', padding: '0.4rem 1.25rem',
             border: '2px solid var(--text-main)', borderRadius: '4px',
-            boxShadow: '3px 3px 0px var(--text-main)', color: 'var(--text-main)', letterSpacing: '0.05em',
+            boxShadow: '4px 4px 0px var(--text-main)', color: 'var(--text-main)', letterSpacing: '0.1em',
+            textTransform: 'uppercase'
           }}>
             ✦ Career Intelligence Platform ✦
           </span>
@@ -61,37 +71,65 @@ export default function Home() {
 
         <h1 style={{
           fontFamily: "'Space Grotesk', system-ui, sans-serif",
-          fontSize: 'clamp(3rem, 9vw, 6rem)',
-          fontWeight: 700,
-          lineHeight: 1.05,
-          letterSpacing: '-0.01em',
+          fontSize: 'clamp(3.5rem, 10vw, 5.5rem)',
+          fontWeight: 800,
+          lineHeight: 1,
+          letterSpacing: '-0.03em',
           color: 'var(--text-main)',
-          marginBottom: '1rem',
+          marginBottom: '1.5rem',
+          maxWidth: '900px'
         }}>
           Graph Your Skills.{' '}
           <span style={{
             position: 'relative', display: 'inline-block',
-            background: 'linear-gradient(90deg, #2563eb, #7c3aed)',
+            background: 'linear-gradient(135deg, #2563eb, #7c3aed)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
           }}>
             Get Answers.
           </span>
         </h1>
 
-        {/* SVG hand-drawn underline */}
-        <svg width="320" height="12" viewBox="0 0 320 12" style={{ display: 'block', margin: '-0.5rem auto 1.5rem' }}>
-          <path d="M4 8 Q80 2, 160 8 Q240 14, 316 6" stroke="#2563eb" strokeWidth="3" fill="none" strokeLinecap="round" style={{ filter: 'url(#squiggle)' }}/>
-        </svg>
-
-        <p style={{ fontSize: '1.15rem', color: 'var(--text-muted)', marginBottom: '2.5rem', lineHeight: 1.7, maxWidth: '560px', margin: '0 auto 2.5rem', fontWeight: 500 }}>
-          Map your engineering skills, identify career gaps, and get grounded roadmaps with citations — straight from verified industry data. No guessing, no hallucinations.
+        <p style={{ 
+          fontSize: '1.25rem', 
+          color: 'var(--text-muted)', 
+          marginBottom: '3rem', 
+          lineHeight: 1.6, 
+          maxWidth: '650px', 
+          fontWeight: 500 
+        }}>
+          Map your engineering skills, identify career gaps, and get grounded roadmaps with citations — straight from verified industry data.
         </p>
 
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/login" className="btn-yellow" style={{ textDecoration: 'none', padding: '0.85rem 2.5rem', fontSize: '1rem', fontWeight: 700, border: '2px solid var(--text-main)', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', boxShadow: '4px 4px 0px var(--text-main)' }}>
-            Get Started <ArrowRight size={18} />
+        <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/login" className="btn-yellow" style={{ 
+            textDecoration: 'none', 
+            padding: '1.1rem 3rem', 
+            fontSize: '1.1rem', 
+            fontWeight: 700, 
+            border: '2px solid var(--text-main)', 
+            borderRadius: '4px', 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            boxShadow: '6px 6px 0px var(--text-main)',
+            transition: 'all 0.2s'
+          }}>
+            Get Started <ArrowRight size={20} />
           </Link>
-          <a href="#features" style={{ padding: '0.85rem 2rem', fontSize: '1rem', fontWeight: 700, border: '2px solid var(--text-main)', borderRadius: '4px', color: 'var(--text-main)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', boxShadow: '3px 3px 0px var(--text-main)' }}>
+          <a href="#features" style={{ 
+            padding: '1.1rem 2.5rem', 
+            fontSize: '1.1rem', 
+            fontWeight: 700, 
+            border: '2px solid var(--text-main)', 
+            borderRadius: '4px', 
+            color: 'var(--text-main)', 
+            textDecoration: 'none', 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            backgroundColor: 'white',
+            boxShadow: '4px 4px 0px var(--text-main)',
+            transition: 'all 0.2s'
+          }}>
             See How It Works
           </a>
         </div>
