@@ -3,7 +3,7 @@ import { SkillModel, ISkill } from '../models/Skill';
 import { UserModel } from '../models/User';
 
 export interface UserSkillItem {
-  _id: string;
+  id: string;
   name: string;
   category: string;
   level: number;
